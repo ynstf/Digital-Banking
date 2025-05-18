@@ -1,4 +1,50 @@
-<div class="container">
-  <div>{{customerId}}</div>
-  <div>{{customer | json}}</div>
+<app-navbar></app-navbar>
+<div class="container mt-4">
+  <h3>Détails du client</h3>
+  <div class="card mb-4">
+    <div class="card-body">
+      <p><strong>ID :</strong> {{ customer.id }}</p>
+      <p><strong>Nom :</strong> {{ customer.name }}</p>
+      <p><strong>Email :</strong> {{ customer.email }}</p>
+    </div>
+  </div>
+
+
+
+
+  <h4>Comptes</h4>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <table class="table table-hover mb-4">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Solde (€)</th>
+        <th>Date création</th>
+        <th>Taux d’intérêt</th>
+        <th>Découvert</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let acc of accounts$ | async">
+        <td>{{ acc.id }}</td>
+        <td>{{ acc.type }}</td>
+        <td>{{ acc.balance | number:'1.2-2' }}</td>
+        <td>{{ acc.createdAt | date:'short' }}</td>
+        <!-- Montrez le taux ou le découvert selon le type -->
+        <td *ngIf="acc.type==='SavingAccount'">{{ acc.interestRate | number:'1.2-2' }}%</td>
+        <td *ngIf="acc.type!=='SavingAccount'">—</td>
+        <td *ngIf="acc.type==='CurrentAccount'">{{ acc.overDraft | number:'1.2-2' }}</td>
+        <td *ngIf="acc.type!=='CurrentAccount'">—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="(accounts$ | async)?.length === 0 && !errorMessage" class="text-muted">
+    Aucun compte trouvé pour ce client.
+  </div>
 </div>

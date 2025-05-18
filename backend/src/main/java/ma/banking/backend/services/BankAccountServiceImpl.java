@@ -17,10 +17,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static org.codehaus.groovy.runtime.DefaultGroovyMethods.collect;
 
 @Service
 @Transactional
@@ -196,5 +199,26 @@ public class BankAccountServiceImpl implements BankAccountService {
         List<Customer> customers=customerRepository.searchCustomer(keyword);
         List<CustomerDTO> customerDTOS = customers.stream().map(cust -> dtoMapper.fromCustomer(cust)).collect(Collectors.toList());
         return customerDTOS;
+    }
+
+    @Override
+    public List<BankAccountDTO> getAccountsByCustomer(Long customerId) throws BankAccountNotFoundException {
+        Collection<Object> accounts = bankAccountRepository.findByCustomerId(customerId);
+        if (accounts.isEmpty()) {
+            throw new BankAccountNotFoundException("Aucun compte trouvé pour le client " + customerId);
+        }
+        return accounts.stream()
+                .map(acc -> {
+                    // mapping polymorphe selon l’instance
+                    if (acc instanceof ma.banking.backend.entities.CurrentAccount) {
+                        return dtoMapper.fromCurrentBankAccount((ma.banking.backend.entities.CurrentAccount) acc);
+                    } else if (acc instanceof ma.banking.backend.entities.SavingAccount) {
+                        return dtoMapper.fromSavingBankAccount((ma.banking.backend.entities.SavingAccount) acc);
+                    } else {
+                        // au cas où vous ajouteriez d’autres types
+                        throw new IllegalStateException("Type de compte inconnu : " + acc.getClass());
+                    }
+                })
+                .collect(Collectors.toList());
     }
 }

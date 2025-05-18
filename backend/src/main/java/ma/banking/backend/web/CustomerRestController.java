@@ -2,8 +2,10 @@ package ma.banking.backend.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ma.banking.backend.dtos.BankAccountDTO;
 import ma.banking.backend.dtos.CustomerDTO;
 import ma.banking.backend.entities.Customer;
+import ma.banking.backend.exceptions.BankAccountNotFoundException;
 import ma.banking.backend.exceptions.CustomerNotFoundException;
 import ma.banking.backend.services.BankAccountService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -59,4 +61,11 @@ public class CustomerRestController {
     public void deleteCustomer(@PathVariable Long id){
         bankAccountService.deleteCustomer(id);
     }
+
+    @GetMapping("/customers/{customerId}/accounts")
+    public List<BankAccountDTO> getAccountsByCustomer(@PathVariable Long customerId)
+            throws BankAccountNotFoundException {
+        return bankAccountService.getAccountsByCustomer(customerId);
+    }
+
 }

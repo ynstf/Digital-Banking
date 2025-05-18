@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 import {AccountDetails} from "../model/account.model";
+import { AccountDTO } from '../model/account.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +27,31 @@ export class AccountsService {
     let data={accountSource, accountDestination, amount, description }
     return this.http.post(environment.backendHost+"/accounts/transfer",data);
   }
+
+
+  getAccountsByCustomer(customerId: string): Observable<AccountDTO[]> {
+  return this.http.get<AccountDTO[]>(
+      `${environment.backendHost}/customers/${customerId}/accounts`
+  );
+}
+
+  // Récupère les comptes d’un client
+
+
+  // Récupère la page d’opérations d’un compte
+  getAccountDetails(
+    accountId: string,
+    page: number = 0,
+    size: number = 5
+  ): Observable<AccountDetails> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get<AccountDetails>(
+      `${environment.backendHost}/accounts/${accountId}/pageOperations`,
+      { params }
+    );
+  }
+
+
 }

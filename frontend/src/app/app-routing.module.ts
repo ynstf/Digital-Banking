@@ -21,6 +21,7 @@ const routes: Routes = [
       { path :"customer-accounts/:id", component : CustomerAccountsComponent},
       { path :"notAuthorized", component : NotAuthorizedComponent},
   ]},
+  { path: 'customer-accounts/:id', component: CustomerAccountsComponent }
 
 ];
 
