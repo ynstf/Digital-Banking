@@ -22,4 +22,17 @@ export class CustomerService {
   public deleteCustomer(id: number){
     return this.http.delete(environment.backendHost+"/customers/"+id);
   }
+
+    // Récupérer un client par ID
+  getCustomer(customerId: number): Observable<Customer> {
+    return this.http.get<Customer>(`${environment.backendHost}/customers/${customerId}`);
+  }
+
+  // Mettre à jour un client
+  updateCustomer(customerId: number, customer: Customer): Observable<Customer> {
+    return this.http.put<Customer>(
+      `${environment.backendHost}/customers/${customerId}`,
+      customer
+    );
+  }
 }

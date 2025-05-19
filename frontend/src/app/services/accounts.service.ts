@@ -29,14 +29,15 @@ export class AccountsService {
   }
 
 
+
+  
+
+  // Récupère les comptes d’un client
   getAccountsByCustomer(customerId: string): Observable<AccountDTO[]> {
   return this.http.get<AccountDTO[]>(
       `${environment.backendHost}/customers/${customerId}/accounts`
   );
 }
-
-  // Récupère les comptes d’un client
-
 
   // Récupère la page d’opérations d’un compte
   getAccountDetails(
@@ -52,6 +53,8 @@ export class AccountsService {
       { params }
     );
   }
+
+
 
 
 }

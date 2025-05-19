@@ -9,6 +9,7 @@ import { AdminTemplateComponent } from './admin-template/admin-template.componen
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { AuthorizationGuard } from './guards/authorization.guard';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 
 const routes: Routes = [
   { path :"login", component : LoginComponent},
@@ -20,7 +21,9 @@ const routes: Routes = [
       { path :"new-customer", component : NewCustomerComponent, canActivate: [AuthorizationGuard], data : {role : "ADMIN"} },
       { path :"customer-accounts/:id", component : CustomerAccountsComponent},
       { path :"notAuthorized", component : NotAuthorizedComponent},
+      
   ]},
+  { path: 'edit-customer/:id', component: EditCustomerComponent },
   { path: 'customer-accounts/:id', component: CustomerAccountsComponent }
 
 ];

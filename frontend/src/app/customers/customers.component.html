@@ -17,7 +17,7 @@
         <table class="table">
           <thead>
           <tr>
-            <th>ID</th><th>Name</th><th>Email</th>
+            <th>ID</th><th>Name</th><th>Email</th><th *ngIf="authService.roles.includes('ADMIN')">Actions</th><th>Details</th>
           </tr>
           </thead>
           <tbody>
@@ -25,11 +25,17 @@
             <td>{{c.id}}</td>
             <td>{{c.name}}</td>
             <td>{{c.email}}</td>
-            <td>
+            
+            <td *ngIf="authService.roles.includes('ADMIN')">
+              <button class="btn btn-sm btn-info me-1"
+                [routerLink]="['/edit-customer', c.id]">
+                <i class="bi bi-pencil"></i>
+              </button>
               <button (click)="handleDeleteCustomer(c)" class="btn btn-danger">
                 <i class="bi bi-trash"></i>
               </button>
             </td>
+            
             <td>
               <button (click)="handleCustomerAccounts(c)" class="btn btn-success">
                 Accounts
