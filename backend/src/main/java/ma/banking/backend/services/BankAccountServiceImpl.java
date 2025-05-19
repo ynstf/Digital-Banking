@@ -104,6 +104,16 @@ public class BankAccountServiceImpl implements BankAccountService {
         savingAccount.setBalance(initialBalance);
         savingAccount.setInterestRate(interestRate);
         savingAccount.setCustomer(customer);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal())) {
+            String username = authentication.getName();
+            savingAccount.setCreatedBy(username);
+        } else {
+            log.warn("No authenticated user found. Setting createdBy as 'system'");
+            savingAccount.setCreatedBy("system"); // or null, or throw exception depending on your logic
+        }
+
         SavingAccount savedBankAccount = bankAccountRepository.save(savingAccount);
         return dtoMapper.fromSavingBankAccount(savedBankAccount);
     }

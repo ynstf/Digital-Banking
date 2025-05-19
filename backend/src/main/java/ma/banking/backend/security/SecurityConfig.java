@@ -47,8 +47,9 @@ public class SecurityConfig {
     public  InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         PasswordEncoder passwordEncoder = passwordEncoder();
         UserDetails user = User.withUsername("user1").password(passwordEncoder.encode("12345")).roles("USER").build();
+        UserDetails amin = User.withUsername("amin@admin").password(passwordEncoder.encode("12345")).roles("USER","ADMIN").build();
         UserDetails admin = User.withUsername("admin").password(passwordEncoder.encode("12345")).roles("USER","ADMIN").build();
-        return new InMemoryUserDetailsManager(user, admin);
+        return new InMemoryUserDetailsManager(user, admin, amin);
     }
 
     @Bean
