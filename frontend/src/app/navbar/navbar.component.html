@@ -9,9 +9,21 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/accounts">Accounts</a>
+
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Accounts
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="/accounts/create-current">New Current Account</a></li>
+            <li *ngIf="authService.roles.includes('ADMIN')"><a class="dropdown-item" routerLink="/accounts/create-saving">New Saving Account</a></li>
+          </ul>
         </li>
+
+
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Customers
@@ -20,6 +32,11 @@
             <li><a class="dropdown-item" routerLink="/admin/customers">Search customers</a></li>
             <li *ngIf="authService.roles.includes('ADMIN')"><a class="dropdown-item" routerLink="/admin/new-customer">New customer</a></li>
           </ul>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin/accounts">Operations</a>
         </li>
 
       </ul>

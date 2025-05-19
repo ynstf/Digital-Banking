@@ -2,6 +2,7 @@ package ma.banking.backend.security;
 
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,6 +38,11 @@ import java.util.List;
 @EnableWebSecurity
 @EnableMethodSecurity // control roles
 public class SecurityConfig {
+
+
+    @Value("${security.jwt.secretKey}")
+    private String secret;
+
     @Bean
     public  InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         PasswordEncoder passwordEncoder = passwordEncoder();
@@ -50,26 +56,48 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//            .csrf(csrf -> csrf.disable())
+//            .cors(Customizer.withDefaults())
+//            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//            .authorizeHttpRequests(auth -> auth
+//                    .requestMatchers("/auth/login/**").permitAll()
+//                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+//                    .anyRequest().authenticated()
+//            )
+//            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())
+//            );
+//        return http.build();
+//    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .cors(Customizer.withDefaults())
-            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/login/**").permitAll()
-                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                    .anyRequest().authenticated()
-            )
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())
-            );
+                .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/login/**", "/auth/profile").permitAll()
+                        // <-- Add swagger-ui.html and webjars here:
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/webjars/**"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
     }
 
 
+
     @Bean
     JwtEncoder jwtEncoder() {
-        String secret = "9faa372517acd1389758d3750fc07acf00f542277f26feec1ce4593e93f64e338";
         return new NimbusJwtEncoder(
                 new ImmutableSecret<>(secret.getBytes(StandardCharsets.UTF_8))
         );
@@ -77,7 +105,6 @@ public class SecurityConfig {
 
     @Bean
     JwtDecoder jwtDecoder() {
-        String secret = "9faa372517acd1389758d3750fc07acf00f542277f26feec1ce4593e93f64e338";
         SecretKeySpec keySpec = new SecretKeySpec(
                 secret.getBytes(StandardCharsets.UTF_8),
                 "HmacSHA512"  // correct pour HS512 :contentReference[oaicite:12]{index=12}

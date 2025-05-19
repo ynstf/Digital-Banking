@@ -2,6 +2,7 @@ package ma.banking.backend.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,9 @@ import static java.util.stream.Collectors.joining;
 @RequestMapping("/auth")
 //@CrossOrigin("*")
 public class SecurityController {
+    @Value("${security.jwt.expiration}")
+    private long jwtExpirationSeconds;
+
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -38,7 +42,6 @@ public class SecurityController {
         Instant now = Instant.now();
 
 
-        long expiry = 600L; // 10 minutes
         String scope = auth.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(joining(" "));
@@ -46,7 +49,7 @@ public class SecurityController {
         JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
                 //.issuer("self")
                 .issuedAt(now)
-                .expiresAt(now.plusSeconds(expiry))
+                .expiresAt(now.plusSeconds(jwtExpirationSeconds))
                 .subject(username)
                 .claim("scope", scope)
                 .build();

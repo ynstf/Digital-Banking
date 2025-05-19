@@ -15,6 +15,7 @@ import { AdminTemplateComponent } from './admin-template/admin-template.componen
 import { AppHttpInterceptor } from './interceptors/app-http.interceptor';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
+import { CreateCurrentAccountComponent } from './pages/create-current-account/create-current-account.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { EditCustomerComponent } from './edit-customer/edit-customer.component';
     LoginComponent,
     AdminTemplateComponent,
     NotAuthorizedComponent,
-    EditCustomerComponent
+    EditCustomerComponent,
+    CreateCurrentAccountComponent
   ],
   imports: [
     BrowserModule,

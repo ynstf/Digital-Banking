@@ -1,0 +1,118 @@
+<app-navbar></app-navbar>
+
+
+<!-- Toast container -->
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div
+      *ngIf="toastType"
+      class="toast show align-items-center text-white 
+             bg-{{ toastType === 'success' ? 'success' : 'danger' }} 
+             border-0"
+      role="alert" aria-live="assertive" aria-atomic="true"
+    >
+      <div class="d-flex">
+        <div class="toast-body">{{ toastMessage }}</div>
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          (click)="toastType = null"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="card col-md-6 offset-md-3 mt-4">
+    <div class="card-header">Créer un compte courant</div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <!-- Typeahead customer search -->
+        <div class="mb-3 position-relative">
+          <label class="form-label">Client :</label>
+          <input
+            type="text"
+            formControlName="customerSearch"
+            class="form-control"
+            placeholder="Tapez le nom du client..."
+            autocomplete="off"
+          />
+          <ul
+            *ngIf="customerOptions.length"
+            class="list-group position-absolute w-100 shadow"
+            style="z-index: 1000;"
+          >
+            <li
+              *ngFor="let c of customerOptions"
+              (click)="onSelectCustomer(c)"
+              class="list-group-item list-group-item-action"
+            >
+              {{ c.name }} ({{ c.email }})
+            </li>
+          </ul>
+          <div
+            *ngIf="form.get('selectedCustomerId')?.touched && form.get('selectedCustomerId')?.invalid"
+            class="text-danger mt-1"
+          >
+            Veuillez sélectionner un client.
+          </div>
+        </div>
+
+        <!-- Hidden field for ID -->
+        <input type="hidden" formControlName="selectedCustomerId" />
+
+        <!-- Initial Balance -->
+        <div class="mb-3">
+          <label class="form-label">Solde initial :</label>
+          <input
+            type="number"
+            formControlName="initialBalance"
+            class="form-control"
+            placeholder="Ex: 1200"
+          />
+          <div
+            *ngIf="form.get('initialBalance')?.touched && form.get('initialBalance')?.invalid"
+            class="text-danger mt-1"
+          >
+            Montant initial invalide.
+          </div>
+        </div>
+
+        <!-- Overdraft -->
+        <div class="mb-3">
+          <label class="form-label">Découvert autorisé :</label>
+          <input
+            type="number"
+            formControlName="overDraft"
+            class="form-control"
+            placeholder="Ex: 300"
+          />
+          <div
+            *ngIf="form.get('overDraft')?.touched && form.get('overDraft')?.invalid"
+            class="text-danger mt-1"
+          >
+            Montant de découvert invalide.
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="form.invalid || isSubmitting"
+        >
+          {{ isSubmitting ? 'Création…' : 'Créer le compte' }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary ms-2"
+          (click)="form.reset()"
+        >
+          Annuler
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
