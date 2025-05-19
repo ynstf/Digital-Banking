@@ -11,6 +11,7 @@ import { AuthorizationGuard } from './guards/authorization.guard';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { CreateCurrentAccountComponent } from './pages/create-current-account/create-current-account.component';
+import { CreateSavingAccountComponent } from './pages/create-saving-account/create-saving-account.component';
 
 const routes: Routes = [
   { path :"login", component : LoginComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'edit-customer/:id', component: EditCustomerComponent },
   { path: 'customer-accounts/:id', component: CustomerAccountsComponent },
   { path: 'accounts/create-current', component: CreateCurrentAccountComponent },
+  { path: 'accounts/create-saving', component: CreateSavingAccountComponent },
 
 ];
 

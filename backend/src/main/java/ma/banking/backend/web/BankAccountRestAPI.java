@@ -75,13 +75,25 @@ public class BankAccountRestAPI {
 
 
     @PostMapping("/accounts/current")
-    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_USER')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     public CurrentBankAccountDTO createCurrentAccount(
             @RequestBody CreateCurrentAccountRequest request
     ) throws CustomerNotFoundException {
         return bankAccountService.saveCurrentBankAccount(
                 request.getInitialBalance(),
                 request.getOverDraft(),
+                request.getCustomerId()
+        );
+    }
+
+    @PostMapping("/accounts/saving")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
+    public SavingBankAccountDTO createSavingAccount(
+            @RequestBody CreateSavingAccountRequest request
+    ) throws CustomerNotFoundException {
+        return bankAccountService.saveSavingBankAccount(
+                request.getInitialBalance(),
+                request.getInterestRate(),
                 request.getCustomerId()
         );
     }

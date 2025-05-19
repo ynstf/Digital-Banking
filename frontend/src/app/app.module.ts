@@ -16,6 +16,7 @@ import { AppHttpInterceptor } from './interceptors/app-http.interceptor';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { CreateCurrentAccountComponent } from './pages/create-current-account/create-current-account.component';
+import { CreateSavingAccountComponent } from './pages/create-saving-account/create-saving-account.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CreateCurrentAccountComponent } from './pages/create-current-account/cr
     AdminTemplateComponent,
     NotAuthorizedComponent,
     EditCustomerComponent,
-    CreateCurrentAccountComponent
+    CreateCurrentAccountComponent,
+    CreateSavingAccountComponent
   ],
   imports: [
     BrowserModule,

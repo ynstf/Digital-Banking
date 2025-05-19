@@ -24,6 +24,21 @@ export interface CurrentBankAccountDTO {
   customerId: number;
 }
 
+export interface CreateSavingAccountRequest {
+  initialBalance: number;
+  interestRate: number;
+  customerId: number;
+}
+
+export interface SavingBankAccountDTO {
+  id: string;
+  balance: number;
+  createdAt: string;
+  status: string;
+  customerDTO: CustomerDTO;
+  interestRate: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class BankAccountService {
 
@@ -46,4 +61,12 @@ export class BankAccountService {
       req
     );
   }
+
+  createSavingAccount(req: CreateSavingAccountRequest): Observable<SavingBankAccountDTO> {
+  return this.http.post<SavingBankAccountDTO>(
+    `${environment.backendHost}/accounts/saving`,
+    req
+  );
+}
+
 }
