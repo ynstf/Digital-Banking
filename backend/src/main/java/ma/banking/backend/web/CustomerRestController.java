@@ -68,4 +68,5 @@ public class CustomerRestController {
         return bankAccountService.getAccountsByCustomer(customerId);
     }
 
+
 }

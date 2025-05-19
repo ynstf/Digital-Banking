@@ -27,6 +27,7 @@ public interface BankAccountService {
     CustomerDTO updateCustomer(CustomerDTO customerDTO);
 
     void deleteCustomer(Long customerId);
+    void deleteBankAccount(String accountId) throws BankAccountNotFoundException;
 
     List<AccountOperationDTO> accountHistory(String accountId);
 
@@ -35,4 +36,7 @@ public interface BankAccountService {
     List<CustomerDTO> searchCustomers(String keyword);
 
     List<BankAccountDTO> getAccountsByCustomer(Long customerId) throws BankAccountNotFoundException ;
+
+
+
 }

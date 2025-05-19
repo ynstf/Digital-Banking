@@ -75,4 +75,14 @@ export class CustomerAccountsComponent implements OnInit {
       this.loadAccountDetails(this.selectedAccountId, page);
     }
   }
+
+  onDeleteAccount(accountId: string) {
+    if (confirm('Voulez-vous vraiment supprimer ce compte ?')) {
+      this.accountService.deleteAccount(accountId).subscribe({
+        next: () => this.loadAccounts(),
+        error: (err) => alert('Erreur lors de la suppression : ' + err.message),
+      });
+    }
+  }
+
 }

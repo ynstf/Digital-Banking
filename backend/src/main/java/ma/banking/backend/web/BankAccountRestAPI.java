@@ -86,6 +86,7 @@ public class BankAccountRestAPI {
         );
     }
 
+
     @PostMapping("/accounts/saving")
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
     public SavingBankAccountDTO createSavingAccount(
@@ -96,6 +97,12 @@ public class BankAccountRestAPI {
                 request.getInterestRate(),
                 request.getCustomerId()
         );
+    }
+
+    @DeleteMapping("/accounts/{id}")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_ADMIN')")
+    public void deleteAccount(@PathVariable String id) throws BankAccountNotFoundException {
+        bankAccountService.deleteBankAccount(id);
     }
 
 }

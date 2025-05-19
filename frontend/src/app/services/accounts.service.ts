@@ -28,6 +28,10 @@ export class AccountsService {
     return this.http.post(environment.backendHost+"/accounts/transfer",data);
   }
 
+  deleteAccount(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.backendHost}/accounts/${id}`);
+  }
+
 
 
   

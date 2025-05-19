@@ -221,4 +221,12 @@ public class BankAccountServiceImpl implements BankAccountService {
                 })
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteBankAccount(String accountId) throws BankAccountNotFoundException {
+        if (!bankAccountRepository.existsById(accountId)) {
+            throw new BankAccountNotFoundException("Bank account with ID " + accountId + " not found");
+        }
+        bankAccountRepository.deleteById(accountId);
+    }
 }
