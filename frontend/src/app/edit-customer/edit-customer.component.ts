@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from '../services/customer.service';
 import { Customer } from '../model/customer.model';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-edit-customer',
@@ -19,7 +20,8 @@ export class EditCustomerComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     public router: Router,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    public authService : AuthService
   ) {}
 
   ngOnInit(): void {
@@ -41,13 +43,15 @@ export class EditCustomerComponent implements OnInit {
       error: (err) => this.errorMessage = err.message
     });
   }
+  
 
   handleSaveCustomer(): void {
     if (this.customerForm.invalid) return;
     const updated: Customer = {
       id: this.customerId,
       name: this.customerForm.value.name,
-      email: this.customerForm.value.email
+      email: this.customerForm.value.email,
+      createdBy: this.authService.username
     };
     this.customerService.updateCustomer(this.customerId, updated)
       .subscribe({

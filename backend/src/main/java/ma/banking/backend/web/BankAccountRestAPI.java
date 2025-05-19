@@ -7,6 +7,7 @@ import ma.banking.backend.exceptions.BankAccountNotFoundException;
 import ma.banking.backend.exceptions.CustomerNotFoundException;
 import ma.banking.backend.services.BankAccountService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,10 @@ public class BankAccountRestAPI {
     @GetMapping("/accounts")
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_USER')")
     public List<BankAccountDTO> listAccounts(){
+        System.out.println("newnewnewnewnew*********************************");
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(username);
+
         return bankAccountService.bankAccountList();
     }
 

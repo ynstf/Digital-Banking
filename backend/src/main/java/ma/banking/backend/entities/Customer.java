@@ -17,4 +17,6 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<BankAccount> bankAccounts;
+    @Column(name = "created_by")
+    private String createdBy;
 }
