@@ -160,6 +160,16 @@ public class BankAccountServiceImpl implements BankAccountService {
         accountOperation.setDescription(description);
         accountOperation.setOperationDate(new Date());
         accountOperation.setBankAccount(bankAccount);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal())) {
+            String username = authentication.getName();
+            accountOperation.setCreatedBy(username);
+        } else {
+            log.warn("No authenticated user found. Setting createdBy as 'system'");
+            accountOperation.setCreatedBy("system"); // or null, or throw exception depending on your logic
+        }
+
         accountOperationRepository.save(accountOperation);
         bankAccount.setBalance(bankAccount.getBalance()-amount);
         bankAccountRepository.save(bankAccount);
@@ -175,6 +185,14 @@ public class BankAccountServiceImpl implements BankAccountService {
         accountOperation.setDescription(description);
         accountOperation.setOperationDate(new Date());
         accountOperation.setBankAccount(bankAccount);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal())) {
+            String username = authentication.getName();
+            accountOperation.setCreatedBy(username);
+        } else {
+            log.warn("No authenticated user found. Setting createdBy as 'system'");
+            accountOperation.setCreatedBy("system"); // or null, or throw exception depending on your logic
+        }
         accountOperationRepository.save(accountOperation);
         bankAccount.setBalance(bankAccount.getBalance()+amount);
         bankAccountRepository.save(bankAccount);

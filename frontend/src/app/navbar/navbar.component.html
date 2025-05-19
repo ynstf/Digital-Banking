@@ -40,15 +40,45 @@
 
       </ul>
 
-      <ul class="navbar" *ngIf="authService.isAuthenticated==true">
-        <li>
-          <a class="nav-link active">{{this.authService.username}}</a>
-        </li>
-        <li>
-          <button (click)="handelLogout()" class="btn btn-success">Logout</button>
-        </li>
 
+
+      <ul class="navbar-nav ms-auto" *ngIf="authService.isAuthenticated">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle d-flex align-items-center"
+            href="#"
+            id="profileDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="bi bi-person-circle fs-4 me-1"></i>
+            {{ authService.username }}
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="profileDropdown"
+          >
+            <li>
+              <a class="dropdown-item d-flex align-items-center" routerLink="/settings">
+                <i class="bi bi-gear me-2"></i>
+                Settings
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <button
+                class="dropdown-item d-flex align-items-center text-danger"
+                (click)="handelLogout()"
+              >
+                <i class="bi bi-box-arrow-right me-2"></i>
+                Logout
+              </button>
+            </li>
+          </ul>
+        </li>
       </ul>
+
 
     </div>
   </div>

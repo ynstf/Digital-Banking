@@ -19,5 +19,7 @@ public class AccountOperation {
     @ManyToOne
     private BankAccount bankAccount;
     private String description;
+    @Column(name = "created_by")
+    private String createdBy;
 }
 

@@ -33,7 +33,7 @@
             </div>
             <table class="table">
               <thead>
-                <th>ID</th><th>Date</th><th>Type</th><th>Amount</th>
+                <th>ID</th><th>Date</th><th>Type</th><th>Amount</th><th>Created by</th>
               </thead>
               <tbody>
                 <tr *ngFor="let op of accountDetails.accountOperationDTOS">
@@ -41,6 +41,7 @@
                   <td>{{op.operationDate | date : 'dd-MM-yyyy:HH-mm-ss'}}</td>
                   <td>{{op.type}}</td>
                   <td class="text-end">{{op.amount | number : '1.2-2'}}</td>
+                  <td class="text-end">{{op.createdBy}}</td>
                 </tr>
               </tbody>
             </table>
