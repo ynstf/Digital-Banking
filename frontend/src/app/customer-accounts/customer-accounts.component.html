@@ -28,6 +28,7 @@
         <th>Date création</th>
         <th>Taux d’intérêt</th>
         <th>Découvert</th>
+        <th>Created by</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -42,6 +43,7 @@
         <td *ngIf="acc.type!=='SavingAccount'">—</td>
         <td *ngIf="acc.type==='CurrentAccount'">{{ acc.overDraft | number:'1.2-2' }}</td>
         <td *ngIf="acc.type!=='CurrentAccount'">—</td>
+        <td>{{ acc.createdBy }}</td>
         <td>
           <button class="btn btn-sm btn-danger" (click)="onDeleteAccount(acc.id)">
             <i class="bi bi-trash"></i>

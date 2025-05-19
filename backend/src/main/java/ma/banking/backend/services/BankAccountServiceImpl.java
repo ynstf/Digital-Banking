@@ -49,7 +49,6 @@ public class BankAccountServiceImpl implements BankAccountService {
 //    }
 
 
-
     @Override
     public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
         log.info("Saving new Customer");
@@ -69,7 +68,6 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
 
-
     @Override
     public CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException {
         Customer customer=customerRepository.findById(customerId).orElse(null);
@@ -81,6 +79,16 @@ public class BankAccountServiceImpl implements BankAccountService {
         currentAccount.setBalance(initialBalance);
         currentAccount.setOverDraft(overDraft);
         currentAccount.setCustomer(customer);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal())) {
+            String username = authentication.getName();
+            currentAccount.setCreatedBy(username);
+        } else {
+            log.warn("No authenticated user found. Setting createdBy as 'system'");
+            currentAccount.setCreatedBy("system"); // or null, or throw exception depending on your logic
+        }
+
         CurrentAccount savedBankAccount = bankAccountRepository.save(currentAccount);
         return dtoMapper.fromCurrentBankAccount(savedBankAccount);
     }
