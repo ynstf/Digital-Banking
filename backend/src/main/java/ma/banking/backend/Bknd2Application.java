@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -33,9 +34,58 @@ public class Bknd2Application {
     }
 
 
-
-
     @Bean
+    CommandLineRunner commandLineRunner(BankAccountService bankAccountService,
+                                        BankAccountRepository bankAccountRepository) {
+        return args -> {
+            Stream.of("Hassan","Imane","Mohamed").forEach(name -> {
+                CustomerDTO customer = new CustomerDTO();
+                customer.setName(name);
+                customer.setEmail(name + "@gmail.com");
+                bankAccountService.saveCustomer(customer);
+            });
+
+            List<CustomerDTO> customers = bankAccountService.listCustomers();
+            int monthOffset = 0;
+
+            for (CustomerDTO customer : customers) {
+                try {
+                    bankAccountService.saveCurrentBankAccount(Math.random() * 90000, 9000, customer.getId());
+                    bankAccountService.saveSavingBankAccount(Math.random() * 120000, 5.5, customer.getId());
+                } catch (CustomerNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                // ⏳ After saving, set creation dates manually
+                List<BankAccount> customerAccounts = bankAccountRepository.findByCustomer_Id(customer.getId());
+
+                for (BankAccount acc : customerAccounts) {
+                    Calendar cal = Calendar.getInstance();
+                    cal.add(Calendar.MONTH, -monthOffset); // backdate: 0, -1, -2, ...
+                    acc.setCreatedAt(cal.getTime());
+                    bankAccountRepository.save(acc); // re-save with updated date
+                }
+
+                monthOffset++; // next customer gets earlier month
+            }
+
+            // ➕ Generate some activity
+            List<BankAccountDTO> bankAccounts = bankAccountService.bankAccountList();
+            for (BankAccountDTO accountDTO : bankAccounts) {
+                String accountId = (accountDTO instanceof SavingBankAccountDTO)
+                        ? ((SavingBankAccountDTO) accountDTO).getId()
+                        : ((CurrentBankAccountDTO) accountDTO).getId();
+
+                for (int i = 0; i < 10; i++) {
+                    bankAccountService.credit(accountId, 10000 + Math.random() * 120000, "Credit");
+                    bankAccountService.debit(accountId, 1000 + Math.random() * 9000, "Debit");
+                }
+            }
+        };
+    }
+
+
+    //@Bean
     CommandLineRunner commandLineRunner(BankAccountService bankAccountService){
         return args -> {
             Stream.of("Hassan","Imane","Mohamed").forEach(name->{
@@ -68,6 +118,9 @@ public class Bknd2Application {
             }
         };
     }
+
+
+
     //@Bean
     CommandLineRunner start(CustomerRepository customerRepository,
                             BankAccountRepository bankAccountRepository,

@@ -38,5 +38,4 @@ public interface BankAccountService {
     List<BankAccountDTO> getAccountsByCustomer(Long customerId) throws BankAccountNotFoundException ;
 
 
-
 }

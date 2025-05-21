@@ -17,5 +17,8 @@ public class AccountOperationDTO {
     private OperationType type;
     private String description;
     private String createdBy;
+
+    private String accountId;
+    private String customerName;
 }
 
