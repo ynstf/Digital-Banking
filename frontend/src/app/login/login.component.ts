@@ -10,6 +10,7 @@ import { Route, Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   formLogin! : FormGroup;
+  loginError: string | null = null; //error message
   constructor(private fb: FormBuilder , private authService : AuthService, 
     private router : Router) { }
 
@@ -21,19 +22,36 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  handelLogin(){
-    let username = this.formLogin.value.username;
-    let pwd = this.formLogin.value.password;
-    this.authService.login(username,pwd).subscribe({
-      next : data => {
-        this.authService.loadProfile(data);
-        this.router.navigateByUrl("/admin/customers");
-      },
-      error : err => {
-        console.log(err)
-      }
-    })
+  // handelLogin(){
+  //   let username = this.formLogin.value.username;
+  //   let pwd = this.formLogin.value.password;
+  //   this.authService.login(username,pwd).subscribe({
+  //     next : data => {
+  //       this.authService.loadProfile(data);
+  //       this.router.navigateByUrl("/admin/customers");
+  //     },
+  //     error : err => {
+  //       console.log(err)
+  //     }
+  //   })
     
+  // }
+
+    handelLogin() {
+    const username = this.formLogin.value.username;
+    const pwd = this.formLogin.value.password;
+
+    this.authService.login(username, pwd).subscribe({
+      next: (data) => {
+        this.authService.loadProfile(data);
+        this.router.navigateByUrl('/admin/customers');
+        this.loginError = null; // clear error on success
+      },
+      error: (err) => {
+        console.error(err);
+        this.loginError = err.error || 'Invalid username or password'; // ✅ show error
+      }
+    });
   }
 
 }

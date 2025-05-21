@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <!-- Change Username Form -->
+  <div class="card col-md-6 offset-3 mt-4">
+    <div class="card-header">Change Username</div>
+    <div class="card-body">
+      <form [formGroup]="usernameForm" (ngSubmit)="changeUsername()">
+        <div class="mb-3">
+          <label class="form-label">New Username:</label>
+          <input type="text" class="form-control" formControlName="newUsername">
+          <span class="text-danger"
+                *ngIf="usernameForm.controls['newUsername'].touched && usernameForm.controls['newUsername'].invalid">
+            Username is required
+          </span>
+        </div>
+        <button class="btn btn-primary" [disabled]="!usernameForm.valid">Update Username</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Change Password Form -->
+  <div class="card col-md-6 offset-3 mt-4">
+    <div class="card-header">Change Password</div>
+    <div class="card-body">
+      <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+        <div class="mb-3">
+          <label class="form-label">Old Password:</label>
+          <input type="password" class="form-control" formControlName="oldPassword">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">New Password:</label>
+          <input type="password" class="form-control" formControlName="newPassword">
+        </div>
+        <span class="text-danger"
+              *ngIf="passwordForm.invalid && (passwordForm.controls['oldPassword'].touched || passwordForm.controls['newPassword'].touched)">
+          Both fields are required
+        </span>
+        <button class="btn btn-warning mt-2" [disabled]="!passwordForm.valid">Update Password</button>
+      </form>
+    </div>
+  </div>
+</div>
+

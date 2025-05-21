@@ -17,6 +17,7 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { CreateCurrentAccountComponent } from './pages/create-current-account/create-current-account.component';
 import { CreateSavingAccountComponent } from './pages/create-saving-account/create-saving-account.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { CreateSavingAccountComponent } from './pages/create-saving-account/crea
     NotAuthorizedComponent,
     EditCustomerComponent,
     CreateCurrentAccountComponent,
-    CreateSavingAccountComponent
+    CreateSavingAccountComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

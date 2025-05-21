@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,11 @@ import { jwtDecode } from 'jwt-decode';
 export class AuthService {
 
   isAuthenticated : boolean = false ;
+  root : String = environment.backendHost ;
   roles : any;
   username : any;
   accessToken! : any;
+
 
   constructor(private http:HttpClient,
     private router : Router
@@ -23,8 +26,9 @@ export class AuthService {
     }
     let params = new HttpParams()
     .set("username",username).set("password",password);
+    
 
-    return this.http.post("http://localhost:8085/auth/login",params,options)
+    return this.http.post(this.root+"/auth/login",params,options)
 
   }
 
@@ -37,6 +41,7 @@ export class AuthService {
     window.localStorage.setItem("jwt-token",this.accessToken);
 
   }
+  
 
   logout(){
     this.isAuthenticated = false;
@@ -54,5 +59,64 @@ export class AuthService {
       this.router.navigateByUrl("/admin/customers")
     }
   }
+
+
+  // public changeUsername(data : any){
+  //   this.http.put(this.root+'/profile/username', data, { responseType: 'text' })
+  //       .subscribe({
+  //         next: res => {alert(res);
+  //                       this.logout()},
+  //         error: err => alert(err.error)
+  //       });
+  // }
+
+
+
+  public changeUsername(data: any) {
+    if (!data.newUsername || data.newUsername.trim() === '') {
+      alert("New username cannot be empty");
+      return;
+    }
+
+    this.http.put(this.root + '/profile/username', data, { responseType: 'text' })
+      .subscribe({
+        next: res => {
+          alert(res);
+          this.logout();
+        },
+        error: err => alert(err.error || "An error occurred")
+      });
+}
+
+
+
+  // public changePassword(data : any){
+  //   this.http.put(this.root+'/profile/password', data, { responseType: 'text' })
+  //       .subscribe({
+  //         next: res => {alert(res);
+  //                       this.logout()},
+  //         error: err => alert(err.error)
+  //       });
+  // }
+
+  public changePassword(data: any) {
+    if (!data.oldPassword || !data.newPassword || data.newPassword.trim() === '') {
+      alert("Old password and new password are required");
+      return;
+    }
+
+    this.http.put(this.root + '/profile/password', data, { responseType: 'text' })
+      .subscribe({
+        next: res => {
+          alert(res);
+          this.logout();
+        },
+        error: err => {
+          const errorMessage = err.error || "May be the password was incorrect";
+          alert(errorMessage);
+        }
+      });
+}
+
 
 }
