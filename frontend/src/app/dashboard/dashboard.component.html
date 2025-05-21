@@ -5,6 +5,22 @@
     </div>
     <div class="card-body">
       <h2 class="card-title mb-4">Dashboard</h2>
+
+      <!-- New account counts row -->
+      <div class="row mb-4">
+        <div
+          class="col"
+          *ngFor="let type of accountCountByType | keyvalue"
+        >
+          <div class="card border-info text-center">
+            <div class="card-body">
+              <h5 class="card-title">{{ formatTypeName(type.key) }}</h5>
+              <p class="display-6">{{ type.value }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-md-6 mb-4">
           <div class="card border-secondary h-100">

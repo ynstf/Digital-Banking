@@ -18,30 +18,43 @@ public class DashboardServiceImpl implements DashboardService {
     private final BankAccountRepository accountRepo;
     private final AccountOperationRepository opRepo;
 
+
     @Override
     public DashboardSummaryDTO getDashboardSummary() {
-        long customerCount = customerRepo.count();
-        long totalAccountCount = accountRepo.count();
+        long customerCount       = customerRepo.count();
+        long totalAccountCount   = accountRepo.count();
 
-        // sum balances grouped by discriminator TYPE column
-        Map<String, Double> totalBalanceByType = accountRepo.findAll().stream()
-                .collect(Collectors.groupingBy(
-                        acc -> acc.getClass().getSimpleName(),     // "CurrentAccount" or "SavingAccount"
-                        Collectors.summingDouble(a -> a.getBalance()))
-                );
+        // count accounts by type
+        Map<String, Long> accountCountByType =
+                accountRepo.findAll().stream()
+                        .collect(Collectors.groupingBy(
+                                acc -> acc.getClass().getSimpleName(),
+                                Collectors.counting()
+                        ));
 
-        // count operations by OperationType enum
-        Map<String, Long> operationCountByType = opRepo.findAll().stream()
-                .collect(Collectors.groupingBy(
-                        op -> op.getType().name(),
-                        Collectors.counting()
-                ));
+        // sum balances grouped by type
+        Map<String, Double> totalBalanceByType =
+                accountRepo.findAll().stream()
+                        .collect(Collectors.groupingBy(
+                                acc -> acc.getClass().getSimpleName(),
+                                Collectors.summingDouble(a -> a.getBalance())
+                        ));
+
+        // count operations by type
+        Map<String, Long> operationCountByType =
+                opRepo.findAll().stream()
+                        .collect(Collectors.groupingBy(
+                                op -> op.getType().name(),
+                                Collectors.counting()
+                        ));
 
         return new DashboardSummaryDTO(
                 customerCount,
                 totalAccountCount,
+                accountCountByType,     // ← pass in
                 totalBalanceByType,
                 operationCountByType
         );
     }
+
 }

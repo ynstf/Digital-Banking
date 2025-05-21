@@ -1,8 +1,5 @@
-// src/app/dashboard/dashboard.component.ts
-
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-// 👇 be sure this points at the service file above
-import { DashboardService } from '../services/dashboard.service';
+import { DashboardService, DashboardSummary } from '../services/dashboard.service';
 
 declare const Chart: any;
 
@@ -15,10 +12,14 @@ export class DashboardComponent implements AfterViewInit {
   @ViewChild('pieCanvas', { static: true }) pieCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('barCanvas', { static: true }) barCanvas!: ElementRef<HTMLCanvasElement>;
 
-  constructor(private dashboardService: DashboardService) { }  // Angular needs the class here
+  accountCountByType!: Record<string, number>;
+
+  constructor(private dashboardService: DashboardService) {}
 
   ngAfterViewInit(): void {
-    this.dashboardService.getSummary().subscribe(summary => {
+    this.dashboardService.getSummary().subscribe((summary: DashboardSummary) => {
+      this.accountCountByType = summary.accountCountByType;
+
       // PIE CHART
       new Chart(this.pieCanvas.nativeElement.getContext('2d'), {
         type: 'pie',
@@ -59,5 +60,13 @@ export class DashboardComponent implements AfterViewInit {
         }
       });
     });
+  }
+
+  /** 
+   * Inserts a space between lowercase-uppercase pairs:
+   *   "SavingAccount" → "Saving Account"
+   */
+  formatTypeName(type: string): string {
+    return type.replace(/([a-z])([A-Z])/g, '$1 $2');
   }
 }

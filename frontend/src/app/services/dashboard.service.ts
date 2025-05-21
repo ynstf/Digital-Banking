@@ -3,9 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
+
+
 export interface DashboardSummary {
   customerCount: number;
   totalAccountCount: number;
+  accountCountByType: Record<string, number>;      // ← new
   totalBalanceByType: Record<string, number>;
   operationCountByType: Record<string, number>;
 }
