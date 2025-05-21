@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { environment } from 'src/environments/environment';
+import { NewUser } from '../model/user.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -60,18 +62,6 @@ export class AuthService {
     }
   }
 
-
-  // public changeUsername(data : any){
-  //   this.http.put(this.root+'/profile/username', data, { responseType: 'text' })
-  //       .subscribe({
-  //         next: res => {alert(res);
-  //                       this.logout()},
-  //         error: err => alert(err.error)
-  //       });
-  // }
-
-
-
   public changeUsername(data: any) {
     if (!data.newUsername || data.newUsername.trim() === '') {
       alert("New username cannot be empty");
@@ -87,17 +77,6 @@ export class AuthService {
         error: err => alert(err.error || "An error occurred")
       });
 }
-
-
-
-  // public changePassword(data : any){
-  //   this.http.put(this.root+'/profile/password', data, { responseType: 'text' })
-  //       .subscribe({
-  //         next: res => {alert(res);
-  //                       this.logout()},
-  //         error: err => alert(err.error)
-  //       });
-  // }
 
   public changePassword(data: any) {
     if (!data.oldPassword || !data.newPassword || data.newPassword.trim() === '') {
@@ -117,6 +96,17 @@ export class AuthService {
         }
       });
 }
+
+  public getUsers(){
+      return this.http.get<any[]>(this.root+'/users');
+  }
+
+
+  public createUser(user: NewUser): Observable<void> {
+    return this.http.post<void>(this.root+'/users', user);
+
+    
+  }
 
 
 }

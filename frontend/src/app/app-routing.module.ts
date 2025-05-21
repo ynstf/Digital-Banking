@@ -14,6 +14,8 @@ import { CreateCurrentAccountComponent } from './pages/create-current-account/cr
 import { CreateSavingAccountComponent } from './pages/create-saving-account/create-saving-account.component';
 import { SettingsComponent } from './settings/settings.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { NewUserComponent } from './new-user/new-user.component';
 
 const routes: Routes = [
   { path :"login", component : LoginComponent},
@@ -26,6 +28,8 @@ const routes: Routes = [
       { path :"customer-accounts/:id", component : CustomerAccountsComponent},
       { path :"notAuthorized", component : NotAuthorizedComponent},
       { path :"dashboard", component : DashboardComponent},
+      { path: 'users', component: UserListComponent },
+      { path: 'new-user', component: NewUserComponent },
       
   ]},
   { path: 'edit-customer/:id', component: EditCustomerComponent },

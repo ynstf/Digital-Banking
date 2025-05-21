@@ -1,0 +1,24 @@
+<div class="container mt-4">
+  <div class="card border-primary">
+    <div class="card-header bg-white text-primary">
+      <strong>User List</strong>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Username</th>
+            <th>Roles</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.username }}</td>
+            <td>{{ user.roles.join(', ') }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

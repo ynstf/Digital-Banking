@@ -1,29 +1,61 @@
-<div class="p-3">
-  <div class="card">
-    <div class="card-header">Login</div>
-    <div class="card-body">
+<form class="form" [formGroup]="formLogin" (ngSubmit)="handelLogin()" autocomplete="off">
+  <div class="control">
+    <h1>Big Banking</h1>
+  </div>
 
-      <!-- Error alert -->
-      <div *ngIf="loginError" class="alert alert-danger" role="alert">
-        {{ loginError }}
-      </div>
+  <!-- Error alert -->
+  <div *ngIf="loginError" class="alert alert-danger" role="alert">
+    {{ loginError }}
+  </div>
 
-      <form [formGroup]="formLogin" (ngSubmit)="handelLogin()">
-        <!-- Username input -->
-        <div class="form-outline mb-4">
-          <input type="text" class="form-control" formControlName="username" />
-          <label class="form-label">Username</label>
-        </div>
-
-        <!-- Password input -->
-        <div class="form-outline mb-4">
-          <input type="password" class="form-control" formControlName="password" />
-          <label class="form-label">Password</label>
-        </div>
-
-        <!-- Submit button -->
-        <button class="btn btn-primary btn-block mb-4" [disabled]="formLogin.invalid">Sign in</button>
-      </form>
+  <div class="control block-cube block-input">
+    <input 
+      type="text" 
+      formControlName="username" 
+      placeholder="Username"
+    />
+    <div class="bg-top">
+      <div class="bg-inner"></div>
+    </div>
+    <div class="bg-right">
+      <div class="bg-inner"></div>
+    </div>
+    <div class="bg">
+      <div class="bg-inner"></div>
     </div>
   </div>
-</div>
+
+  <div class="control block-cube block-input">
+    <input 
+      type="password" 
+      formControlName="password" 
+      placeholder="Password"
+    />
+    <div class="bg-top">
+      <div class="bg-inner"></div>
+    </div>
+    <div class="bg-right">
+      <div class="bg-inner"></div>
+    </div>
+    <div class="bg">
+      <div class="bg-inner"></div>
+    </div>
+  </div>
+
+  <button 
+    type="submit" 
+    class="btn block-cube block-cube-hover" 
+    [disabled]="formLogin.invalid"
+  >
+    <div class="bg-top">
+      <div class="bg-inner"></div>
+    </div>
+    <div class="bg-right">
+      <div class="bg-inner"></div>
+    </div>
+    <div class="bg">
+      <div class="bg-inner"></div>
+    </div>
+    <div class="text">Log In</div>
+  </button>
+</form>

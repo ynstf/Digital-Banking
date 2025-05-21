@@ -19,6 +19,8 @@ import { CreateCurrentAccountComponent } from './pages/create-current-account/cr
 import { CreateSavingAccountComponent } from './pages/create-saving-account/create-saving-account.component';
 import { SettingsComponent } from './settings/settings.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { NewUserComponent } from './new-user/new-user.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     CreateCurrentAccountComponent,
     CreateSavingAccountComponent,
     SettingsComponent,
-    DashboardComponent
+    DashboardComponent,
+    UserListComponent,
+    NewUserComponent
   ],
   imports: [
     BrowserModule,

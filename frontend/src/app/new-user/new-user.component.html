@@ -1,0 +1,45 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h4>Create New User</h4>
+    </div>
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+    <div class="card-body">
+
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label>Username</label>
+          <input type="text" class="form-control" formControlName="username" />
+          <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched" class="text-danger">
+            Username is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label>Password</label>
+          <input type="password" class="form-control" formControlName="password" />
+          <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="text-danger">
+            Password is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label>Roles</label>
+          <div formArrayName="roles" *ngFor="let roleCtrl of rolesFormArray.controls; let i = index">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" [formControlName]="i" />
+              <label class="form-check-label">{{ rolesList[i] }}</label>
+            </div>
+          </div>
+            <div *ngIf="rolesFormArray.errors?.['required'] && rolesFormArray.touched" class="text-danger">
+            At least one role must be selected.
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Create User</button>
+      </form>
+    </div>
+  </div>
+</div>
