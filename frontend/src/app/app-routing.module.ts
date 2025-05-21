@@ -13,6 +13,7 @@ import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { CreateCurrentAccountComponent } from './pages/create-current-account/create-current-account.component';
 import { CreateSavingAccountComponent } from './pages/create-saving-account/create-saving-account.component';
 import { SettingsComponent } from './settings/settings.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   { path :"login", component : LoginComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path :"new-customer", component : NewCustomerComponent, canActivate: [AuthorizationGuard], data : {role : "ADMIN"} },
       { path :"customer-accounts/:id", component : CustomerAccountsComponent},
       { path :"notAuthorized", component : NotAuthorizedComponent},
+      { path :"dashboard", component : DashboardComponent},
       
   ]},
   { path: 'edit-customer/:id', component: EditCustomerComponent },

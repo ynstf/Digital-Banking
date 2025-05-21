@@ -1,9 +1,9 @@
-package ma.banking.backend.dtos;
+package ma.banking.backend.dtos.opertaions;
 
 import lombok.Data;
 
 @Data
-public class DebitDTO {
+public class CreditDTO {
     private String accountId;
     private double amount;
     private String description;

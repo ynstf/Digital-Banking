@@ -37,16 +37,6 @@ public class BankAccountServiceImpl implements BankAccountService {
     private AccountOperationRepository accountOperationRepository;
     private BankAccountMapperImpl dtoMapper;
 
-//    @Override
-//    public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
-//        log.info("Saving new Customer");
-//        Customer customer=dtoMapper.fromCustomerDTO(customerDTO);
-//        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-//        System.out.println(username);
-//        customer.setCreatedBy(username);
-//        Customer savedCustomer = customerRepository.save(customer);
-//        return dtoMapper.fromCustomer(savedCustomer);
-//    }
 
 
     @Override
@@ -66,7 +56,6 @@ public class BankAccountServiceImpl implements BankAccountService {
         Customer savedCustomer = customerRepository.save(customer);
         return dtoMapper.fromCustomer(savedCustomer);
     }
-
 
     @Override
     public CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException {
@@ -203,6 +192,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         debit(accountIdSource,amount,"Transfer to "+accountIdDestination);
         credit(accountIdDestination,amount,"Transfer from "+accountIdSource);
     }
+
     @Override
     public List<BankAccountDTO> bankAccountList(){
         List<BankAccount> bankAccounts = bankAccountRepository.findAll();
@@ -217,6 +207,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         }).collect(Collectors.toList());
         return bankAccountDTOS;
     }
+
     @Override
     public CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException {
         Customer customer = customerRepository.findById(customerId)
@@ -231,10 +222,12 @@ public class BankAccountServiceImpl implements BankAccountService {
         Customer savedCustomer = customerRepository.save(customer);
         return dtoMapper.fromCustomer(savedCustomer);
     }
+
     @Override
     public void deleteCustomer(Long customerId){
         customerRepository.deleteById(customerId);
     }
+
     @Override
     public List<AccountOperationDTO> accountHistory(String accountId){
         List<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountId(accountId);

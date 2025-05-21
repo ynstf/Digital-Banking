@@ -1,7 +1,9 @@
 package ma.banking.backend.web;
 
-import lombok.extern.slf4j.Slf4j;
 import ma.banking.backend.dtos.*;
+import ma.banking.backend.dtos.opertaions.CreditDTO;
+import ma.banking.backend.dtos.opertaions.DebitDTO;
+import ma.banking.backend.dtos.opertaions.TransferRequestDTO;
 import ma.banking.backend.exceptions.BalanceNotSufficientException;
 import ma.banking.backend.exceptions.BankAccountNotFoundException;
 import ma.banking.backend.exceptions.CustomerNotFoundException;

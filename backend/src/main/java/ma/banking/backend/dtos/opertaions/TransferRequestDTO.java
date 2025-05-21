@@ -1,4 +1,4 @@
-package ma.banking.backend.dtos;
+package ma.banking.backend.dtos.opertaions;
 
 import lombok.Data;
 
