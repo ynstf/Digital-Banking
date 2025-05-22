@@ -2,10 +2,10 @@ package ma.banking.backend.mappers;
 
 
 
-import ma.banking.backend.dtos.AccountOperationDTO;
-import ma.banking.backend.dtos.CurrentBankAccountDTO;
-import ma.banking.backend.dtos.CustomerDTO;
-import ma.banking.backend.dtos.SavingBankAccountDTO;
+import ma.banking.backend.dtos.accountsOps.AccountOperationDTO;
+import ma.banking.backend.dtos.accountsOps.CurrentBankAccountDTO;
+import ma.banking.backend.dtos.accountsOps.CustomerDTO;
+import ma.banking.backend.dtos.accountsOps.SavingBankAccountDTO;
 import ma.banking.backend.entities.AccountOperation;
 import ma.banking.backend.entities.CurrentAccount;
 import ma.banking.backend.entities.Customer;

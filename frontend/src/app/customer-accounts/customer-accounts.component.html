@@ -1,59 +1,84 @@
 <app-navbar></app-navbar>
-<div class="container mt-4">
-  <h3>Détails du client</h3>
-  <div class="card mb-4">
-    <div class="card-body">
-      <p><strong>ID :</strong> {{ customer.id }}</p>
-      <p><strong>Nom :</strong> {{ customer.name }}</p>
-      <p><strong>Email :</strong> {{ customer.email }}</p>
-      <p><strong>CREATED BY :</strong> {{ customer.createdBy }}</p>
+<div class="container">
+  <!-- Customer Details Card -->
+  <div class="cyber-card">
+    <div class="cyber-card-header">
+      <h2>Détails du client</h2>
+    </div>
+    <div class="cyber-card-body">
+      <div class="customer-details">
+        <p><strong>ID :</strong> {{ customer.id }}</p>
+        <p><strong>Nom :</strong> {{ customer.name }}</p>
+        <p><strong>Email :</strong> {{ customer.email }}</p>
+        <p><strong>CREATED BY :</strong> {{ customer.createdBy }}</p>
+      </div>
     </div>
   </div>
 
+  <!-- Accounts Section -->
+  <div class="cyber-card">
+    <div class="cyber-card-header">
+      <h2>Comptes</h2>
+    </div>
+    <div class="cyber-card-body">
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="cyber-error">
+        {{ errorMessage }}
+      </div>
 
+      <!-- Loading State -->
+      <div *ngIf="!accounts$ && !errorMessage" class="cyber-loading">
+        <div class="cyber-loader"></div>
+        <div class="cyber-loading-text">
+          Chargement<span class="cyber-loading-dots"></span>
+        </div>
+      </div>
 
+      <!-- Accounts Table -->
+      <table *ngIf="accounts$ && !errorMessage" class="cyber-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Solde (€)</th>
+            <th>Date création</th>
+            <th>Taux d'intérêt</th>
+            <th>Découvert</th>
+            <th>Created by</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let acc of accounts$ | async">
+            <td>{{ acc.id }}</td>
+            <td>
+              <span class="account-type-badge" [class.saving-account]="acc.type==='SavingAccount'" [class.current-account]="acc.type==='CurrentAccount'">
+                {{ acc.type }}
+              </span>
+            </td>
+            <td class="balance-cell">{{ acc.balance | number:'1.2-2' }}</td>
+            <td>{{ acc.createdAt | date:'short' }}</td>
+            <!-- Montrez le taux ou le découvert selon le type -->
+            <td *ngIf="acc.type==='SavingAccount'" class="interest-rate">{{ acc.interestRate | number:'1.2-2' }}%</td>
+            <td *ngIf="acc.type!=='SavingAccount'" class="na-cell">—</td>
+            <td *ngIf="acc.type==='CurrentAccount'" class="overdraft">{{ acc.overDraft | number:'1.2-2' }}</td>
+            <td *ngIf="acc.type!=='CurrentAccount'" class="na-cell">—</td>
+            <td>{{ acc.createdBy }}</td>
+            <td>
+              <button class="cyber-btn cyber-btn-danger cyber-btn-sm" (click)="onDeleteAccount(acc.id)">
+                <i class="bi bi-trash"></i> Supprimer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-  <h4>Comptes</h4>
-
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
-
-  <table class="table table-hover mb-4">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Type</th>
-        <th>Solde (€)</th>
-        <th>Date création</th>
-        <th>Taux d’intérêt</th>
-        <th>Découvert</th>
-        <th>Created by</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let acc of accounts$ | async">
-        <td>{{ acc.id }}</td>
-        <td>{{ acc.type }}</td>
-        <td>{{ acc.balance | number:'1.2-2' }}</td>
-        <td>{{ acc.createdAt | date:'short' }}</td>
-        <!-- Montrez le taux ou le découvert selon le type -->
-        <td *ngIf="acc.type==='SavingAccount'">{{ acc.interestRate | number:'1.2-2' }}%</td>
-        <td *ngIf="acc.type!=='SavingAccount'">—</td>
-        <td *ngIf="acc.type==='CurrentAccount'">{{ acc.overDraft | number:'1.2-2' }}</td>
-        <td *ngIf="acc.type!=='CurrentAccount'">—</td>
-        <td>{{ acc.createdBy }}</td>
-        <td>
-          <button class="btn btn-sm btn-danger" (click)="onDeleteAccount(acc.id)">
-            <i class="bi bi-trash"></i>
-          </button>
-      </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div *ngIf="(accounts$ | async)?.length === 0 && !errorMessage" class="text-muted">
-    Aucun compte trouvé pour ce client.
+      <!-- No Accounts Message -->
+      <div *ngIf="(accounts$ | async)?.length === 0 && !errorMessage" class="no-accounts-message">
+        <div class="cyber-info-box">
+          <p>Aucun compte trouvé pour ce client.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-package ma.banking.backend.services;
+package ma.banking.backend.services.bankOps;
 
 import ma.banking.backend.entities.BankAccount;
 import ma.banking.backend.entities.CurrentAccount;

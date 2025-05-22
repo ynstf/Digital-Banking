@@ -1,13 +1,13 @@
 package ma.banking.backend.web;
 
-import ma.banking.backend.dtos.*;
+import ma.banking.backend.dtos.accountsOps.*;
 import ma.banking.backend.dtos.opertaions.CreditDTO;
 import ma.banking.backend.dtos.opertaions.DebitDTO;
 import ma.banking.backend.dtos.opertaions.TransferRequestDTO;
 import ma.banking.backend.exceptions.BalanceNotSufficientException;
 import ma.banking.backend.exceptions.BankAccountNotFoundException;
 import ma.banking.backend.exceptions.CustomerNotFoundException;
-import ma.banking.backend.services.BankAccountService;
+import ma.banking.backend.services.bankOps.BankAccountService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;

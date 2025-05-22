@@ -1,7 +1,7 @@
 package ma.banking.backend.services.dashboard;
 
 
-import ma.banking.backend.dtos.AccountOperationDTO;
+import ma.banking.backend.dtos.accountsOps.AccountOperationDTO;
 import ma.banking.backend.dtos.dashboard.DashboardSummaryDTO;
 
 import java.util.List;

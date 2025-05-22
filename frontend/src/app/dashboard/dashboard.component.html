@@ -1,115 +1,109 @@
-<div class="container mt-4">
-    <div class="card border-primary">
-        <div class="card-header bg-white text-primary"><strong>Summary</strong></div>
-        <div class="card-body">
-        <h2 class="card-title mb-4">Dashboard</h2>
-
-        <!-- Account counts -->
-        <div class="row mb-4">
-            <div class="col" *ngFor="let item of accountCountByType | keyvalue">
-            <div class="card border-info text-center">
-                <div class="card-body">
-                <h5 class="card-title">{{ formatTypeName(item.key) }}</h5>
-                <p class="display-6">{{ item.value }}</p>
-                </div>
-            </div>
-            </div>
+<div class="container">
+    <div class="cyber-card">
+        <div class="cyber-card-header">
+            <h2>Dashboard</h2>
         </div>
-
-        <!-- Existing pie/bar charts -->
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="card border-secondary h-100">
-                    <div class="card-body"><canvas #pieCanvas></canvas></div>
+        <div class="cyber-card-body">
+            <!-- Account counts -->
+            <div class="account-counts-grid">
+                <div class="account-count-card" *ngFor="let item of accountCountByType | keyvalue">
+                    <div class="count-card-content">
+                        <h5 class="count-title">{{ formatTypeName(item.key) }}</h5>
+                        <p class="count-value">{{ item.value }}</p>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-4">
-                <div class="card border-secondary h-100">
-                    <div class="card-body"><canvas #barCanvas></canvas>
 
-                    <!--  Adjusted: Average balance doughnut (half-width like pie chart) -->
-                        <div class="card border-info">
-                            <div class="card-body">
-                                <h5 class="card-title">Average Balance by Account Type</h5>
-                                <canvas #doughnutCanvas style="max-width: 100%; max-height: 250px;"></canvas>
+            <!-- Charts Row 1: Pie and Bar -->
+            <div class="charts-row">
+                <div class="chart-container">
+                    <div class="cyber-chart-card">
+                        <div class="chart-body">
+                            <canvas #pieCanvas></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="cyber-chart-card">
+                        <div class="chart-body">
+                            <canvas #barCanvas></canvas>
+                            
+                            <!-- Average balance doughnut -->
+                            <div class="doughnut-section">
+                                <div class="cyber-chart-card">
+                                    <div class="chart-body">
+                                        <h5 class="chart-title">Average Balance by Account Type</h5>
+                                        <canvas #doughnutCanvas class="doughnut-canvas"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- New line chart row -->
-        <div class="row mb-4">
-            <div class="col">
-            <div class="card border-success">
-                <div class="card-body">
-                <h5 class="card-title">Account Creations Over Time</h5>
-                <canvas #lineCanvas></canvas>
-                </div>
-            </div>
-            </div>
-        </div>
-
-        <!-- ← NEW: weekday bar chart -->
-        <div class="row mb-4">
-            <div class="col">
-            <div class="card border-warning">
-                <div class="card-body">
-                <h5 class="card-title">Volume des transactions par jour</h5>
-                <canvas #weekdayCanvas></canvas>
-                </div>
-            </div>
-            </div>
-        </div>
-
-        <!-- ← NEW: Top customers horizontal bar -->
-        <div class="row mb-4">
-            <div class="col">
-            <div class="card border-warning">
-                <div class="card-body">
-                <h5 class="card-title">Top 5 Customers by Total Balance</h5>
-                <canvas #topCustCanvas></canvas>
-                </div>
-            </div>
-            </div>
-        </div>
-
-        <!-- ✅ New: Recent Operations Feed -->
-        <div class="row mb-4">
-            <div class="col">
-                <div class="card border-dark">
-                <div class="card-body">
-                    <h5 class="card-title">Recent Operations</h5>
-                    <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
-                    <table class="table table-sm table-hover">
-                        <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Type</th>
-                            <th>Amount</th>
-                            <th>Account</th>
-                            <th>Customer</th>
-                            <th>Description</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let op of recentOperations">
-                            <td>{{ op.operationDate | date:'short' }}</td>
-                            <td>{{ op.type }}</td>
-                            <td>{{ op.amount | number:'1.2-2' }}</td>
-                            <td>{{ op.accountId }}</td>
-                            <td>{{ op.customerName }}</td>
-                            <td>{{ op.description }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+            <!-- Line Chart Row -->
+            <div class="full-width-chart">
+                <div class="cyber-chart-card">
+                    <div class="chart-body">
+                        <h5 class="chart-title">Account Creations Over Time</h5>
+                        <canvas #lineCanvas></canvas>
                     </div>
                 </div>
+            </div>
+
+            <!-- Weekday Chart -->
+            <div class="full-width-chart">
+                <div class="cyber-chart-card">
+                    <div class="chart-body">
+                        <h5 class="chart-title">Volume des transactions par jour</h5>
+                        <canvas #weekdayCanvas></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
-        
+
+            <!-- Top Customers Chart -->
+            <div class="full-width-chart">
+                <div class="cyber-chart-card">
+                    <div class="chart-body">
+                        <h5 class="chart-title">Top 5 Customers by Total Balance</h5>
+                        <canvas #topCustCanvas></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Operations Feed -->
+            <div class="full-width-chart">
+                <div class="cyber-chart-card">
+                    <div class="chart-body">
+                        <h5 class="chart-title">Recent Operations</h5>
+                        <div class="operations-table-container">
+                            <table class="cyber-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Amount</th>
+                                        <th>Account</th>
+                                        <th>Customer</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let op of recentOperations">
+                                        <td>{{ op.operationDate | date:'short' }}</td>
+                                        <td>{{ op.type }}</td>
+                                        <td>{{ op.amount | number:'1.2-2' }}</td>
+                                        <td>{{ op.accountId }}</td>
+                                        <td>{{ op.customerName }}</td>
+                                        <td>{{ op.description }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

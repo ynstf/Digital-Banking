@@ -1,8 +1,8 @@
-package ma.banking.backend.services;
+package ma.banking.backend.services.bankOps;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ma.banking.backend.dtos.*;
+import ma.banking.backend.dtos.accountsOps.*;
 import ma.banking.backend.entities.*;
 import ma.banking.backend.enums.OperationType;
 import ma.banking.backend.exceptions.BalanceNotSufficientException;

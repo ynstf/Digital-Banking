@@ -12,10 +12,10 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 
-import ma.banking.backend.dtos.BankAccountDTO;
-import ma.banking.backend.dtos.CurrentBankAccountDTO;
-import ma.banking.backend.dtos.CustomerDTO;
-import ma.banking.backend.dtos.SavingBankAccountDTO;
+import ma.banking.backend.dtos.accountsOps.BankAccountDTO;
+import ma.banking.backend.dtos.accountsOps.CurrentBankAccountDTO;
+import ma.banking.backend.dtos.accountsOps.CustomerDTO;
+import ma.banking.backend.dtos.accountsOps.SavingBankAccountDTO;
 import ma.banking.backend.entities.*;
 import ma.banking.backend.enums.AccountStatus;
 import ma.banking.backend.enums.OperationType;
@@ -24,7 +24,7 @@ import ma.banking.backend.exceptions.CustomerNotFoundException;
 import ma.banking.backend.repositories.AccountOperationRepository;
 import ma.banking.backend.repositories.BankAccountRepository;
 import ma.banking.backend.repositories.CustomerRepository;
-import ma.banking.backend.services.BankAccountService;
+import ma.banking.backend.services.bankOps.BankAccountService;
 
 @SpringBootApplication
 public class Bknd2Application {

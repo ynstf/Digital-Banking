@@ -1,10 +1,6 @@
-package ma.banking.backend.services;
+package ma.banking.backend.services.bankOps;
 
-import ma.banking.backend.dtos.*;
-import ma.banking.backend.entities.BankAccount;
-import ma.banking.backend.entities.CurrentAccount;
-import ma.banking.backend.entities.Customer;
-import ma.banking.backend.entities.SavingAccount;
+import ma.banking.backend.dtos.accountsOps.*;
 import ma.banking.backend.exceptions.BalanceNotSufficientException;
 import ma.banking.backend.exceptions.BankAccountNotFoundException;
 import ma.banking.backend.exceptions.CustomerNotFoundException;

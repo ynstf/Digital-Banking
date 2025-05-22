@@ -1,39 +1,57 @@
 <div class="container mt-2">
   <div class="row">
     <div class="col col-md-6">
-      <div class="card">
-        <div class="card-header">Accounts</div>
-        <div class="card-body">
-          <form [formGroup]="accountFormGroup" (ngSubmit)="handleSearchAccount()">
-            <div class="input-group">
-              <label class="input-group-text">Account Id :</label>
-              <input type="text" formControlName="accountId" class="form-control">
-              <button class="btn btn-info">
+      <div class="cyber-card">
+        <div class="cyber-card-header">
+          <h2>Accounts</h2>
+        </div>
+        <div class="cyber-card-body">
+          <form [formGroup]="accountFormGroup" (ngSubmit)="handleSearchAccount()" class="cyber-search-form">
+            <div class="cyber-input-group">
+              <label class="cyber-input-label">Account Id :</label>
+              <input type="text" formControlName="accountId" class="cyber-input" placeholder="Enter Account ID">
+              <button class="cyber-search-btn" type="submit">
                 <i class="bi bi-search"></i>
                 Search
               </button>
             </div>
           </form>
+
           <ng-template #errorTemplate>
             <ng-container *ngIf="errorMessage ; else loading">
-              <div class="text-danger">{{errorMessage}}</div>
+              <div class="cyber-error">{{errorMessage}}</div>
             </ng-container>
             <ng-template #loading>
-              Loading ...
+              <div class="cyber-loading">
+                <div class="cyber-loader"></div>
+                <div class="cyber-loading-text">
+                  Loading<span class="cyber-loading-dots"></span>
+                </div>
+              </div>
             </ng-template>
           </ng-template>
+
           <ng-container *ngIf="accountObservable | async as accountDetails">
-            <div class="mb-2">
-              <label>Account ID :</label>
-              <label><strong>{{accountDetails.accountId}}</strong></label>
+            <div class="account-details-section">
+              <div class="account-detail-item">
+                <label class="detail-label">Account ID :</label>
+                <label class="detail-value"><strong>{{accountDetails.accountId}}</strong></label>
+              </div>
+              <div class="account-detail-item">
+                <label class="detail-label">Balance :</label>
+                <label class="detail-value"><strong>{{accountDetails.balance | number : '1.2-2'}}</strong></label>
+              </div>
             </div>
-            <div class="mb-2">
-              <label>Balance :</label>
-              <label><strong>{{accountDetails.balance | number : '1.2-2'}}</strong></label>
-            </div>
-            <table class="table">
+
+            <table class="cyber-table">
               <thead>
-                <th>ID</th><th>Date</th><th>Type</th><th>Amount</th><th>Created by</th>
+                <tr>
+                  <th>ID</th>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Created by</th>
+                </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let op of accountDetails.accountOperationDTOS">
@@ -45,51 +63,66 @@
                 </tr>
               </tbody>
             </table>
-            <ul class="nav nav-pills">
-              <li *ngFor="let item of [].constructor(accountDetails.totalPages);let page=index">
-                <a [ngClass]="page==currentPage?'btn-info':'btn-outline-info'" (click)="gotoPage(page)" class="btn  ms-1 mt-1">{{page}}</a>
-              </li>
-            </ul>
+
+            <div class="pagination-section">
+              <div class="cyber-pagination">
+                <button *ngFor="let item of [].constructor(accountDetails.totalPages);let page=index" 
+                        [ngClass]="page==currentPage?'cyber-btn cyber-btn-info':'cyber-btn cyber-btn-outline'" 
+                        (click)="gotoPage(page)"
+                        class="cyber-btn-sm">
+                  {{page}}
+                </button>
+              </div>
+            </div>
           </ng-container>
         </div>
       </div>
     </div>
 
-
-
-
     <div class="col col-md-6" *ngIf="authService.roles.includes('ADMIN')">
-      <div class="card" *ngIf="accountObservable">
-        <div class="card-header">Operations</div>
-        <div class="card-body">
+      <div class="cyber-card" *ngIf="accountObservable">
+        <div class="cyber-card-header">
+          <h2>Operations</h2>
+        </div>
+        <div class="cyber-card-body">
+          <form [formGroup]="operationFromGroup" (ngSubmit)="handleAccountOperation()" method="post" class="operations-form">
+            
+            <div class="operation-type-section">
+              <div class="radio-group">
+                <div class="cyber-radio-item">
+                  <input class="cyber-radio-input" type="radio" formControlName="operationType" value="DEBIT" id="debit">
+                  <label class="cyber-radio-label" for="debit">DEBIT</label>
+                </div>
+                <div class="cyber-radio-item">
+                  <input class="cyber-radio-input" type="radio" formControlName="operationType" value="CREDIT" id="credit">
+                  <label class="cyber-radio-label" for="credit">CREDIT</label>
+                </div>
+                <div class="cyber-radio-item">
+                  <input class="cyber-radio-input" type="radio" formControlName="operationType" value="TRANSFER" id="transfer">
+                  <label class="cyber-radio-label" for="transfer">TRANSFER</label>
+                </div>
+              </div>
+            </div>
 
-          <form [formGroup]="operationFromGroup" (ngSubmit)="handleAccountOperation()" method="post">
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" formControlName="operationType" value="DEBIT">
-              <label class="form-check-label">DEBIT:</label>
+            <div class="cyber-form-group" *ngIf="operationFromGroup.value.operationType=='TRANSFER'">
+              <label class="cyber-form-label">Account Destination :</label>
+              <input type="text" formControlName="accountDestination" class="cyber-form-input" placeholder="Enter destination account">
             </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" formControlName="operationType" value="CREDIT">
-              <label class="form-check-label">CREDIT:</label>
+
+            <div class="cyber-form-group">
+              <label class="cyber-form-label">Amount :</label>
+              <input type="text" formControlName="amount" class="cyber-form-input" placeholder="Enter amount">
             </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" formControlName="operationType" value="TRANSFER">
-              <label class="form-check-label">TRANSFER:</label>
+
+            <div class="cyber-form-group">
+              <label class="cyber-form-label">Description :</label>
+              <input type="text" formControlName="description" class="cyber-form-input" placeholder="Enter description">
             </div>
-            <div class="mb-3" *ngIf="operationFromGroup.value.operationType=='TRANSFER'">
-              <label class="form-label">Account Destination :</label>
-              <input type="text" formControlName="accountDestination" class="form-control">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Amount :</label>
-              <input type="text" formControlName="amount" class="form-control">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Description :</label>
-              <input type="text" formControlName="description" class="form-control">
-            </div>
-            <div class="d-grid mb-3">
-              <button class="btn btn-success">Save Operation</button>
+
+            <div class="form-submit-section">
+              <button class="cyber-btn cyber-btn-success cyber-btn-full" type="submit">
+                Save Operation
+              </button>
             </div>
           </form>
         </div>

@@ -1,9 +1,6 @@
-package ma.banking.backend.dtos;
+package ma.banking.backend.dtos.accountsOps;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import ma.banking.backend.entities.BankAccount;
 import ma.banking.backend.enums.OperationType;
 
 

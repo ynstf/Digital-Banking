@@ -1,6 +1,5 @@
-package ma.banking.backend.dtos;
+package ma.banking.backend.dtos.accountsOps;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 
 @Data

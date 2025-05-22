@@ -3,7 +3,7 @@ package ma.banking.backend.web;
 
 import ma.banking.backend.dtos.profileUpdate.PasswordChangeRequest;
 import ma.banking.backend.dtos.profileUpdate.UsernameChangeRequest;
-import ma.banking.backend.services.ProfileService;
+import ma.banking.backend.services.users.ProfileService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;

@@ -2,7 +2,7 @@ package ma.banking.backend.dtos.dashboard;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import ma.banking.backend.dtos.AccountOperationDTO;
+import ma.banking.backend.dtos.accountsOps.AccountOperationDTO;
 
 import java.util.List;
 import java.util.Map;

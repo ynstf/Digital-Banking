@@ -1,7 +1,7 @@
 package ma.banking.backend.services.dashboard;
 
 import lombok.AllArgsConstructor;
-import ma.banking.backend.dtos.AccountOperationDTO;
+import ma.banking.backend.dtos.accountsOps.AccountOperationDTO;
 import ma.banking.backend.dtos.dashboard.DashboardSummaryDTO;
 //import ma.banking.backend.enums.OperationType;
 import ma.banking.backend.dtos.dashboard.TopCustomerDTO;

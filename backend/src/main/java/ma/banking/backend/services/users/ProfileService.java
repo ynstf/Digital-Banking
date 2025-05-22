@@ -1,4 +1,4 @@
-package ma.banking.backend.services;
+package ma.banking.backend.services.users;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

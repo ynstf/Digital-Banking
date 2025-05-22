@@ -2,12 +2,11 @@ package ma.banking.backend.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ma.banking.backend.dtos.BankAccountDTO;
-import ma.banking.backend.dtos.CustomerDTO;
-import ma.banking.backend.entities.Customer;
+import ma.banking.backend.dtos.accountsOps.BankAccountDTO;
+import ma.banking.backend.dtos.accountsOps.CustomerDTO;
 import ma.banking.backend.exceptions.BankAccountNotFoundException;
 import ma.banking.backend.exceptions.CustomerNotFoundException;
-import ma.banking.backend.services.BankAccountService;
+import ma.banking.backend.services.bankOps.BankAccountService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 

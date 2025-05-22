@@ -1,32 +1,88 @@
 <div class="container">
-  <div class="card col-md-6 offset-3 mt-2">
-    <div class="card-header">New Customer</div>
-    <div class="card-body">
-      <form [formGroup]="newCustomerFormGroup" (ngSubmit)="handleSaveCustomer()">
-
-        <!-- <p>{{newCustomerFormGroup.value | json}}</p> -->
-        <div class="mb-3">
-          <label class="form-label">Name:</label>
-          <input type="text" formControlName="name" class="form-control">
-          <span class="text-danger"
-                *ngIf="newCustomerFormGroup.controls['name'].touched
-                && newCustomerFormGroup.controls['name'].errors
-                && newCustomerFormGroup.controls['name'].errors!['required']">
-            Name is Required
-          </span>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Email:</label>
-          <input type="text" formControlName="email" class="form-control">
-          <span class="text-danger"
-                *ngIf="newCustomerFormGroup.controls['email'].touched
-                && newCustomerFormGroup.controls['email'].errors
-                && newCustomerFormGroup.controls['email'].errors!['email']">
-            Email is not valid
-          </span>
-        </div>
-        <button [disabled]="!newCustomerFormGroup.valid" class="btn btn-info">Save</button>
-      </form>
+  <form class="form" [formGroup]="newCustomerFormGroup" (ngSubmit)="handleSaveCustomer()" autocomplete="off">
+    <div class="control">
+      <h1>New Customer</h1>
     </div>
-  </div>
+
+    <div class="control block-cube block-input">
+      <input 
+        type="text" 
+        formControlName="name" 
+        placeholder="Customer Name"
+      />
+      <div class="bg-top">
+        <div class="bg-inner"></div>
+      </div>
+      <div class="bg-right">
+        <div class="bg-inner"></div>
+      </div>
+      <div class="bg">
+        <div class="bg-inner"></div>
+      </div>
+    </div>
+
+    <!-- Name validation error -->
+    <div *ngIf="newCustomerFormGroup.controls['name'].touched && 
+                newCustomerFormGroup.controls['name'].errors && 
+                newCustomerFormGroup.controls['name'].errors!['required']" 
+         class="alert alert-danger" role="alert">
+      <span class="error-icon">⚠</span>
+      Name is Required
+    </div>
+
+    <div class="control block-cube block-input">
+      <input 
+        type="email" 
+        formControlName="email" 
+        placeholder="Email Address"
+      />
+      <div class="bg-top">
+        <div class="bg-inner"></div>
+      </div>
+      <div class="bg-right">
+        <div class="bg-inner"></div>
+      </div>
+      <div class="bg">
+        <div class="bg-inner"></div>
+      </div>
+    </div>
+
+    <!-- Email validation error -->
+    <div *ngIf="newCustomerFormGroup.controls['email'].touched && 
+                newCustomerFormGroup.controls['email'].errors && 
+                newCustomerFormGroup.controls['email'].errors!['email']" 
+         class="alert alert-danger" role="alert">
+      <span class="error-icon">✉</span>
+      Email is not valid
+    </div>
+
+    <button 
+      type="submit" 
+      class="btn block-cube block-cube-hover" 
+      [disabled]="!newCustomerFormGroup.valid"
+    >
+      <div class="bg-top">
+        <div class="bg-inner"></div>
+      </div>
+      <div class="bg-right">
+        <div class="bg-inner"></div>
+      </div>
+      <div class="bg">
+        <div class="bg-inner"></div>
+      </div>
+      <div class="text">
+        <span class="btn-icon">💾</span>
+        Save Customer
+      </div>
+    </button>
+
+    <!-- Success indicator (you can add this to your component logic) -->
+    <div class="form-footer">
+      <div class="tech-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </form>
 </div>

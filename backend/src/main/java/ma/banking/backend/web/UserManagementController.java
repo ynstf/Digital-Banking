@@ -2,7 +2,7 @@ package ma.banking.backend.web;
 
 import ma.banking.backend.dtos.users.NewUserRequest;
 import ma.banking.backend.dtos.users.UserInfoDTO;
-import ma.banking.backend.services.UserManagementService;
+import ma.banking.backend.services.users.UserManagementService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

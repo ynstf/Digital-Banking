@@ -1,4 +1,4 @@
-package ma.banking.backend.services;
+package ma.banking.backend.services.users;
 
 import ma.banking.backend.dtos.users.NewUserRequest;
 import ma.banking.backend.dtos.users.UserInfoDTO;
@@ -8,7 +8,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

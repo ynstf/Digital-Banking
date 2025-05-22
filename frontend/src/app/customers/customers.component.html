@@ -1,60 +1,111 @@
-<div class="container mt-2">
-  <ng-container *ngIf="customers | async as listCustomers; else failureOrLading">
-    <div class="card">
-      <div class="card-header">Customers</div>
-      <div class="card-body">
-        <div *ngIf="searchFormGroup">
-          <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
-            <div class="input-group">
-              <label class="input-group-text">Name :</label>
-              <input type="text" formControlName="keyword" class="form-control">
-              <button class="btn btn-info">
-                <i class="bi bi-search"></i>
-              </button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberpunk Table</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Table with data -->
+         <ng-container *ngIf="customers | async as listCustomers; else failureOrLading">
+          <div class="cyber-card">
+              <div class="cyber-card-header">
+                  <h2>Customers</h2>
+              </div>
+              <div class="cyber-card-body">
+                  <!-- Search form -->
+                  <div *ngIf="searchFormGroup"  class="cyber-search-form">
+                      <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
+                          <div class="cyber-input-group">
+                              <label class="cyber-input-label">Name:</label>
+                              <input type="text" formControlName="keyword" class="cyber-input" placeholder="Search customers...">
+                              <button class="cyber-search-btn">
+                                  🔍 SCAN
+                              </button>
+                          </div>
+                      </form>
+                  </div>
+
+                  <!-- Table -->
+                  <table class="cyber-table">
+                      <thead>
+                          <tr>
+                              <th>ID</th>
+                              <th>Name</th>
+                              <th>Email</th>
+                              <th *ngIf="authService.roles.includes('ADMIN')">Actions</th>
+                              <th>Details</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let c of customers | async">
+                              <td>{{c.id}}</td>
+                              <td>{{c.name}}</td>
+                              <td>{{c.email}}</td>
+                              <td *ngIf="authService.roles.includes('ADMIN')">
+                                  <button class="cyber-btn cyber-btn-info cyber-btn-sm" [routerLink]="['/edit-customer', c.id]">
+                                      ✏️ Edit
+                                  </button>
+                                  <button (click)="handleDeleteCustomer(c)"  class="cyber-btn cyber-btn-danger cyber-btn-sm">
+                                      🗑️ Delete
+                                  </button>
+                              </td>
+                              <td>
+                                  <button (click)="handleCustomerAccounts(c)"  class="cyber-btn cyber-btn-success">
+                                      💳 Accounts
+                                  </button>
+                              </td>
+                          </tr>
+
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+        </ng-container>
+
+        
+    <ng-template #failureOrLading>
+
+        <!-- Error state -->
+        <ng-container *ngIf="errorMessage; else loading">
+            <div class="cyber-card" style="margin-top: 40px;">
+                <div class="cyber-card-header">
+                    <h2>Error State</h2>
+                </div>
+                <div class="cyber-card-body">
+                    <div class="cyber-error">
+                        ⚠️ CONNECTION FAILED: Unable to access customer database
+                    </div>
+                </div>
             </div>
-          </form>
-        </div>
-        <table class="table">
-          <thead>
-          <tr>
-            <th>ID</th><th>Name</th><th>Email</th><th *ngIf="authService.roles.includes('ADMIN')">Actions</th><th>Details</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let c of customers | async">
-            <td>{{c.id}}</td>
-            <td>{{c.name}}</td>
-            <td>{{c.email}}</td>
-            
-            <td *ngIf="authService.roles.includes('ADMIN')">
-              <button class="btn btn-sm btn-info me-1"
-                [routerLink]="['/edit-customer', c.id]">
-                <i class="bi bi-pencil"></i>
-              </button>
-              <button (click)="handleDeleteCustomer(c)" class="btn btn-danger">
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-            
-            <td>
-              <button (click)="handleCustomerAccounts(c)" class="btn btn-success">
-                Accounts
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+        </ng-container>
+
+
+        <!-- Loading state -->
+        <ng-template #loading>
+            <div class="cyber-card" style="margin-top: 40px;">
+                <div class="cyber-card-header">
+                    <h2>Loading State</h2>
+                </div>
+                <div class="cyber-card-body">
+                    <div class="cyber-loading">
+                        <div class="cyber-loader"></div>
+                        <div class="cyber-loading-text">
+                            Accessing Database<span class="cyber-loading-dots"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+      </ng-template>
+        
+
+        
     </div>
-  </ng-container>
-  <ng-template #failureOrLading>
-    <ng-container *ngIf="errorMessage; else loading">
-      <div class="text-danger">
-        {{errorMessage}}
-      </div>
-    </ng-container>
-    <ng-template #loading>
-      Loading .....
-    </ng-template>
-  </ng-template>
-</div>
+</body>
+</html>
