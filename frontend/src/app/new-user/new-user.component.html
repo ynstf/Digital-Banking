@@ -1,45 +1,120 @@
-<div class="container mt-4">
-  <div class="card">
-    <div class="card-header">
-      <h4>Create New User</h4>
+<div class="cyber-container">
+  <div class="form">
+    <h1>Create New User</h1>
+    
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
     </div>
-        <div *ngIf="errorMessage" class="alert alert-danger">
-          {{ errorMessage }}
-        </div>
-    <div class="card-body">
 
-      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <div class="mb-3">
-          <label>Username</label>
-          <input type="text" class="form-control" formControlName="username" />
-          <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched" class="text-danger">
-            Username is required.
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <!-- Username Field -->
+      <div class="control">
+        <div class="block-cube block-input">
+          <input 
+            type="text" 
+            class="form-control" 
+            formControlName="username" 
+            placeholder="Enter username"
+            autocomplete="username"
+          />
+          <div class="bg-top">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg-right">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg">
+            <div class="bg-inner"></div>
           </div>
         </div>
+        <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched" 
+             class="error-message">
+          <span class="error-icon">⚠</span>
+          Username is required.
+        </div>
+      </div>
 
-        <div class="mb-3">
-          <label>Password</label>
-          <input type="password" class="form-control" formControlName="password" />
-          <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="text-danger">
-            Password is required.
+      <!-- Password Field -->
+      <div class="control">
+        <div class="block-cube block-input">
+          <input 
+            type="password" 
+            class="form-control" 
+            formControlName="password" 
+            placeholder="Enter password"
+            autocomplete="new-password"
+          />
+          <div class="bg-top">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg-right">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg">
+            <div class="bg-inner"></div>
           </div>
         </div>
+        <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" 
+             class="error-message">
+          <span class="error-icon">⚠</span>
+          Password is required.
+        </div>
+      </div>
 
-        <div class="mb-3">
-          <label>Roles</label>
-          <div formArrayName="roles" *ngFor="let roleCtrl of rolesFormArray.controls; let i = index">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" [formControlName]="i" />
-              <label class="form-check-label">{{ rolesList[i] }}</label>
+      <!-- Roles Section -->
+      <div class="control roles-section">
+        <label class="roles-label">
+          <span class="label-text">Select Roles</span>
+          <span class="label-glow"></span>
+        </label>
+        
+        <div class="roles-container" formArrayName="roles">
+          <div *ngFor="let roleCtrl of rolesFormArray.controls; let i = index" 
+               class="role-item">
+            <div class="cyber-checkbox">
+              <input 
+                type="checkbox" 
+                class="checkbox-input" 
+                [formControlName]="i" 
+                [id]="'role-' + i"
+              />
+              <label [for]="'role-' + i" class="checkbox-label">
+                <span class="checkbox-custom">
+                  <span class="checkbox-inner"></span>
+                </span>
+                <span class="checkbox-text">{{ rolesList[i] }}</span>
+              </label>
             </div>
           </div>
-            <div *ngIf="rolesFormArray.errors?.['required'] && rolesFormArray.touched" class="text-danger">
-            At least one role must be selected.
-          </div>
         </div>
+        
+        <div *ngIf="rolesFormArray.errors?.['required'] && rolesFormArray.touched" 
+             class="error-message">
+          <span class="error-icon">⚠</span>
+          At least one role must be selected.
+        </div>
+      </div>
 
-        <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Create User</button>
-      </form>
-    </div>
+
+
+     <button 
+      type="submit" 
+      class="btn block-cube block-cube-hover" 
+      [disabled]="!userForm.valid"
+    >
+      <div class="bg-top">
+        <div class="bg-inner"></div>
+      </div>
+      <div class="bg-right">
+        <div class="bg-inner"></div>
+      </div>
+      <div class="bg">
+        <div class="bg-inner"></div>
+      </div>
+      <div class="text">
+        Create User
+      </div>
+    </button>
+    </form>
   </div>
 </div>

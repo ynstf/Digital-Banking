@@ -1,0 +1,567 @@
+/* CSS Variables for easy customization */
+:root {
+  --bg-body: #0a0a0a;
+  --bg-gradient-start: rgba(2, 0, 36, 1);
+  --bg-gradient-mid: rgba(52, 9, 121, 1);
+  --bg-gradient-end: rgba(0, 212, 255, 1);
+  --bg-gradient: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%);
+  --neon-blue: #00d4ff;
+  --neon-purple: #8a2be2;
+  --danger-color: #ff4757;
+  --success-color: #2ed573;
+}
+
+/* Component host styling */
+:host {
+  display: block;
+  min-height: 100vh;
+  background: var(--bg-body);
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(52, 9, 121, 0.05) 0%, transparent 50%);
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+/* Main container */
+.cyber-container {
+  padding: 40px 20px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Form container styles */
+.form {
+  width: 100%;
+  max-width: 480px;
+  padding: 60px 40px 50px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.05em;
+  color: #fff;
+  position: relative;
+  background: rgba(10, 10, 10, 0.8);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.form::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: var(--bg-gradient);
+  border-radius: 12px;
+  z-index: -1;
+  opacity: 0.3;
+  animation: borderGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes borderGlow {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+
+/* Title styling */
+.form h1 {
+  font-size: 32px;
+  margin: 0 0 50px;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 
+    0 0 10px rgba(0, 212, 255, 0.8),
+    0 0 20px rgba(0, 212, 255, 0.6),
+    0 0 30px rgba(0, 212, 255, 0.4),
+    2px 2px 4px rgba(0, 0, 0, 0.8);
+  font-weight: bold;
+  animation: titlePulse 2s ease-in-out infinite alternate;
+  letter-spacing: 3px;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.form h1::before {
+  content: 'Create New User';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  z-index: -1;
+  animation: gradientShift 3s ease-in-out infinite alternate;
+}
+
+@keyframes gradientShift {
+  0% { 
+    background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  100% { 
+    background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-blue) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}
+
+@keyframes titlePulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.02); }
+}
+
+/* Error alert styling */
+.alert {
+  padding: 15px 20px;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.alert-danger {
+  background: linear-gradient(135deg, rgba(255, 71, 87, 0.2) 0%, rgba(220, 53, 69, 0.1) 100%);
+  border: 1px solid rgba(255, 71, 87, 0.4);
+  color: #ffcdd2;
+  box-shadow: 0 8px 16px rgba(255, 71, 87, 0.2);
+}
+
+.alert-danger::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Control styles for form elements */
+.form .control {
+  margin: 0 0 35px;
+  position: relative;
+}
+
+.form .control input {
+  width: 100%;
+  padding: 18px 20px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.05em;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.form .control input:hover,
+.form .control input:focus {
+  outline: none;
+  border: 0;
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue);
+}
+
+.form .control input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+.form .control input:focus::placeholder {
+  color: rgba(0, 212, 255, 0.8);
+}
+
+/* Error message styling */
+.error-message {
+  color: var(--danger-color);
+  font-size: 14px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: errorFadeIn 0.3s ease-out;
+}
+
+.error-icon {
+  font-size: 16px;
+  animation: errorPulse 1s ease-in-out infinite;
+}
+
+@keyframes errorFadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes errorPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Roles section styling */
+.roles-section {
+  margin-bottom: 40px;
+}
+
+.roles-label {
+  display: block;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.label-text {
+  font-size: 18px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.roles-container {
+  display: grid;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.role-item {
+  position: relative;
+}
+
+/* Custom Cyber Checkbox */
+.cyber-checkbox {
+  position: relative;
+}
+
+.checkbox-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.checkbox-label:hover {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+}
+
+.checkbox-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.checkbox-inner {
+  width: 8px;
+  height: 8px;
+  background: var(--neon-blue);
+  border-radius: 1px;
+  transform: scale(0);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px var(--neon-blue);
+}
+
+.checkbox-input:checked + .checkbox-label .checkbox-custom {
+  border-color: var(--neon-blue);
+  background: rgba(0, 212, 255, 0.2);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+}
+
+.checkbox-input:checked + .checkbox-label .checkbox-inner {
+  transform: scale(1);
+}
+
+.checkbox-input:checked + .checkbox-label {
+  background: rgba(0, 212, 255, 0.15);
+  border-color: rgba(0, 212, 255, 0.5);
+}
+
+.checkbox-text {
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.checkbox-input:checked + .checkbox-label .checkbox-text {
+  color: var(--neon-blue);
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+}
+
+/* Button styles */
+.form .btn {
+  width: 100%;
+  display: block;
+  padding: 18px 20px;
+  background: transparent;
+  outline: none;
+  border: 0;
+  color: #fff;
+  letter-spacing: 0.15em;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.form .btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+.form .btn:not(:disabled):hover {
+  color: var(--neon-blue);
+  text-shadow: 0 0 15px var(--neon-blue);
+  transform: translateY(-2px);
+}
+
+/* 3D Block Cube Effect */
+.block-cube {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+}
+
+.block-cube:hover {
+  transform: translateY(-5px) rotateX(2deg) rotateY(2deg);
+}
+
+/* Top face of the cube */
+.block-cube .bg-top {
+  position: absolute;
+  height: 15px;
+  background: var(--bg-gradient);
+  bottom: 100%;
+  left: 8px;
+  right: -8px;
+  transform: skew(-45deg, 0);
+  margin: 0;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  border-radius: 2px;
+}
+
+.block-cube .bg-top .bg-inner {
+  bottom: 0;
+  border-radius: 2px;
+}
+
+/* Main background */
+.block-cube .bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-gradient);
+  border-radius: 8px;
+  box-shadow: 
+    0 0 30px rgba(0, 212, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Right face of the cube */
+.block-cube .bg-right {
+  position: absolute;
+  background: linear-gradient(45deg, var(--bg-gradient-end), var(--neon-purple));
+  top: -8px;
+  z-index: 0;
+  bottom: 8px;
+  width: 15px;
+  left: 100%;
+  transform: skew(0, -45deg);
+  box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
+  border-radius: 2px;
+}
+
+.block-cube .bg-right .bg-inner {
+  left: 0;
+  border-radius: 2px;
+}
+
+.block-cube .bg .bg-inner {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 6px;
+}
+
+/* Inner background that creates the 3D effect */
+.block-cube .bg-inner {
+  background: rgba(10, 10, 10, 0.9);
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  right: 3px;
+  bottom: 3px;
+  backdrop-filter: blur(5px);
+}
+
+/* Text positioning */
+.block-cube .text {
+  position: relative;
+  z-index: 2;
+}
+
+/* Input field specific styles */
+.block-cube.block-input {
+  margin-bottom: 8px;
+}
+
+.block-cube.block-input input {
+  position: relative;
+  z-index: 2;
+}
+
+/* Focus effects for input fields */
+.block-cube.block-input input:focus ~ .bg-right .bg-inner,
+.block-cube.block-input input:focus ~ .bg-top .bg-inner,
+.block-cube.block-input input:focus ~ .bg .bg-inner {
+  top: 100%;
+  background: rgba(0, 212, 255, 0.1);
+  box-shadow: 
+    0 0 20px rgba(0, 212, 255, 0.3),
+    inset 0 0 20px rgba(0, 212, 255, 0.1);
+}
+
+/* Input field border effects */
+.block-cube.block-input .bg-top,
+.block-cube.block-input .bg-right,
+.block-cube.block-input .bg {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 212, 255, 0.2));
+  transition: all 0.4s ease;
+}
+
+.block-cube.block-input .bg-right .bg-inner,
+.block-cube.block-input .bg-top .bg-inner {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover effects for input fields */
+.block-cube.block-input:hover .bg-top,
+.block-cube.block-input:hover .bg-right,
+.block-cube.block-input:hover .bg {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(0, 212, 255, 0.4));
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
+}
+
+/* Button hover and focus effects */
+.block-cube.block-cube-hover:not(:disabled):hover .bg .bg-inner {
+  top: 100%;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(138, 43, 226, 0.2));
+}
+
+.block-cube.block-cube-hover:not(:disabled):hover {
+  transform: translateY(-8px) rotateX(5deg) rotateY(5deg) scale(1.02);
+  box-shadow: 
+    0 15px 30px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(0, 212, 255, 0.3);
+}
+
+.block-cube.block-cube-hover:not(:disabled):active {
+  transform: translateY(-2px) rotateX(1deg) rotateY(1deg) scale(0.98);
+  transition: all 0.1s ease;
+}
+
+/* Focus effects */
+.block-cube.block-input:focus-within {
+  animation: focusPulse 2s ease-in-out infinite;
+}
+
+@keyframes focusPulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
+  }
+}
+
+/* Glitch effect for button when hovered */
+.block-cube.block-cube-hover:not(:disabled):hover .text {
+  animation: glitch 0.3s ease-in-out;
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  10% { transform: translate(-2px, 1px); }
+  20% { transform: translate(2px, -1px); }
+  30% { transform: translate(-1px, 2px); }
+  40% { transform: translate(1px, -2px); }
+  50% { transform: translate(-2px, -1px); }
+  60% { transform: translate(2px, 1px); }
+  70% { transform: translate(-1px, -2px); }
+  80% { transform: translate(1px, 2px); }
+  90% { transform: translate(-2px, 1px); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .cyber-container {
+    padding: 20px 15px;
+  }
+  
+  .form {
+    padding: 40px 30px;
+    max-width: 100%;
+  }
+  
+  .form h1 {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+  
+  .roles-container {
+    padding: 15px;
+  }
+  
+  .checkbox-label {
+    padding: 10px 12px;
+  }
+}

@@ -38,6 +38,16 @@
           <a class="nav-link" routerLink="/admin/accounts">Operations</a>
         </li>
 
+        <li class="nav-item dropdown" *ngIf="authService.roles.includes('ADMIN')">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Accounts
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li ><a class="dropdown-item" routerLink="/admin/users">Users list</a></li>
+            <li ><a class="dropdown-item" routerLink="/admin/new-user">New user</a></li>
+          </ul>
+        </li>
+
       </ul>
 
 

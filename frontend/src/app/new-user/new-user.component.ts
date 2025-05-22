@@ -8,6 +8,7 @@ import { NewUser } from '../model/user.model';
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
+  styleUrls: ['./new-user.component.css']
 })
 export class NewUserComponent {
   userForm: FormGroup;

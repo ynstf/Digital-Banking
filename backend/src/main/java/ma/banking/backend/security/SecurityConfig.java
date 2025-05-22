@@ -81,7 +81,6 @@ public class SecurityConfig {
     }
 
 
-
     @Bean
     JwtEncoder jwtEncoder() {
         return new NimbusJwtEncoder(

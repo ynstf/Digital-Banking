@@ -1,0 +1,254 @@
+/* Component-specific cyberpunk styling */
+:host {
+  display: block;
+  background: #0a0a0a;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(52, 9, 121, 0.05) 0%, transparent 50%);
+  min-height: 100vh;
+  font-family: 'Courier New', monospace;
+  color: #fff;
+}
+
+/* CSS Variables for easy customization */
+:host {
+  --bg-body: #0a0a0a;
+  --bg-gradient-start: rgba(2, 0, 36, 1);
+  --bg-gradient-mid: rgba(52, 9, 121, 1);
+  --bg-gradient-end: rgba(0, 212, 255, 1);
+  --bg-gradient: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%);
+  --neon-blue: #00d4ff;
+  --neon-purple: #8a2be2;
+  --neon-green: #00ff88;
+  --danger-color: #ff4757;
+  --success-color: #2ed573;
+  --warning-color: #ffa502;
+}
+
+/* Container styling */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Card styling with cyberpunk theme */
+.cyber-card {
+  background: rgba(10, 10, 10, 0.85);
+  border-radius: 15px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.cyber-card::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-green), var(--neon-blue));
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0.4;
+  animation: borderRotate 4s linear infinite;
+}
+
+@keyframes borderRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.cyber-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 10, 10, 0.9);
+  border-radius: 15px;
+  z-index: -1;
+}
+
+/* Card header styling */
+.cyber-card-header {
+  padding: 25px 30px;
+  border-bottom: 2px solid rgba(0, 255, 136, 0.3);
+  position: relative;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.05));
+}
+
+.cyber-card-header strong {
+  margin: 0;
+  font-size: 28px;
+  color: #ffffff;
+  text-shadow: 
+    0 0 10px rgba(0, 255, 136, 0.8),
+    0 0 20px rgba(0, 255, 136, 0.6),
+    0 0 30px rgba(0, 255, 136, 0.4);
+  font-weight: bold;
+  animation: titlePulse 2.5s ease-in-out infinite alternate;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: block;
+  text-align: center;
+}
+
+@keyframes titlePulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.02); }
+}
+
+.cyber-card-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+  animation: techPulse 2s ease-in-out infinite;
+}
+
+@keyframes techPulse {
+  0%, 100% { opacity: 0.3; transform: translateX(-50%) scaleX(1); }
+  50% { opacity: 1; transform: translateX(-50%) scaleX(1.5); }
+}
+
+/* Card body styling */
+.cyber-card-body {
+  padding: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Table styling */
+.cyber-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 20px;
+  background: transparent;
+  position: relative;
+}
+
+.cyber-table::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-green));
+  border-radius: 12px;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+/* Table header styling */
+.cyber-table thead {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 212, 255, 0.1));
+  position: relative;
+}
+
+.cyber-table thead::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-green), var(--neon-purple));
+  animation: gradientFlow 3s ease-in-out infinite;
+}
+
+@keyframes gradientFlow {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+.cyber-table th {
+  padding: 20px 15px;
+  color: var(--neon-green);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 14px;
+  text-shadow: 0 0 10px var(--neon-green);
+  border: none;
+  position: relative;
+  font-family: 'Courier New', monospace;
+  text-align: center;
+}
+
+.cyber-table th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.cyber-table th:last-child {
+  border-top-right-radius: 10px;
+}
+
+/* Table body styling */
+.cyber-table tbody tr {
+  background: rgba(10, 10, 10, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.cyber-table tbody tr:hover {
+  background: rgba(0, 255, 136, 0.1);
+  box-shadow: 
+    0 5px 15px rgba(0, 255, 136, 0.2),
+    inset 0 0 20px rgba(0, 255, 136, 0.05);
+  transform: translateY(-2px);
+}
+
+.cyber-table tbody tr:hover td {
+  color: var(--neon-green);
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+}
+
+.cyber-table td {
+  padding: 18px 15px;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+  border: none;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
+
+  .cyber-card {
+    margin: 10px 0;
+  }
+
+  .cyber-card-body {
+    padding: 20px 15px;
+  }
+
+  .cyber-table {
+    font-size: 12px;
+  }
+
+  .cyber-table th,
+  .cyber-table td {
+    padding: 12px 8px;
+  }
+}
