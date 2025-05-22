@@ -1,21 +1,19 @@
 <app-navbar></app-navbar>
 
-
 <!-- Toast container -->
 <div aria-live="polite" aria-atomic="true" class="position-relative">
   <div class="toast-container position-fixed top-0 end-0 p-3">
     <div
       *ngIf="toastType"
-      class="toast show align-items-center text-white 
-             bg-{{ toastType === 'success' ? 'success' : 'danger' }} 
-             border-0"
+      class="toast show align-items-center text-white cyber-toast"
+      [ngClass]="{'toast-success': toastType === 'success'}"
       role="alert" aria-live="assertive" aria-atomic="true"
     >
       <div class="d-flex">
         <div class="toast-body">{{ toastMessage }}</div>
         <button
           type="button"
-          class="btn-close btn-close-white me-2 m-auto"
+          class="cyber-close-btn"
           (click)="toastType = null"
         ></button>
       </div>
@@ -23,96 +21,124 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="card col-md-6 offset-md-3 mt-4">
-    <div class="card-header">Créer un compte courant</div>
-    <div class="card-body">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+<div class="cyber-container">
+  <div class="form">
+    <h1>Créer un compte courant</h1>
+    
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-        <!-- Typeahead customer search -->
-        <div class="mb-3 position-relative">
-          <label class="form-label">Client :</label>
+      <!-- Alert for form errors -->
+      <div *ngIf="form.get('selectedCustomerId')?.touched && form.get('selectedCustomerId')?.invalid" 
+           class="alert alert-danger">
+        Veuillez sélectionner un client.
+      </div>
+
+      <!-- Typeahead customer search -->
+      <div class="control position-relative">
+        <div class="block-cube block-input">
           <input
             type="text"
             formControlName="customerSearch"
-            class="form-control"
             placeholder="Tapez le nom du client..."
             autocomplete="off"
           />
-          <ul
-            *ngIf="customerOptions.length"
-            class="list-group position-absolute w-100 shadow"
-            style="z-index: 1000;"
-          >
-            <li
-              *ngFor="let c of customerOptions"
-              (click)="onSelectCustomer(c)"
-              class="list-group-item list-group-item-action"
-            >
-              {{ c.name }} ({{ c.email }})
-            </li>
-          </ul>
+          <div class="bg-top"></div>
+          <div class="bg-right"></div>
+          <div class="bg"></div>
+          <div class="bg-inner"></div>
+        </div>
+        
+        <!-- Customer dropdown -->
+        <div
+          *ngIf="customerOptions.length"
+          class="cyber-dropdown"
+        >
           <div
-            *ngIf="form.get('selectedCustomerId')?.touched && form.get('selectedCustomerId')?.invalid"
-            class="text-danger mt-1"
+            *ngFor="let c of customerOptions"
+            (click)="onSelectCustomer(c)"
+            class="cyber-dropdown-item"
           >
-            Veuillez sélectionner un client.
+            <span class="customer-name">{{ c.name }}</span>
+            <span class="customer-email">{{ c.email }}</span>
           </div>
         </div>
+      </div>
 
-        <!-- Hidden field for ID -->
-        <input type="hidden" formControlName="selectedCustomerId" />
+      <!-- Hidden field for ID -->
+      <input type="hidden" formControlName="selectedCustomerId" />
 
-        <!-- Initial Balance -->
-        <div class="mb-3">
-          <label class="form-label">Solde initial :</label>
+      <!-- Initial Balance -->
+      <div class="control">
+        <div class="block-cube block-input">
           <input
             type="number"
             formControlName="initialBalance"
-            class="form-control"
-            placeholder="Ex: 1200"
+            placeholder="Solde initial (Ex: 1200)"
           />
-          <div
-            *ngIf="form.get('initialBalance')?.touched && form.get('initialBalance')?.invalid"
-            class="text-danger mt-1"
-          >
-            Montant initial invalide.
-          </div>
+          <div class="bg-top"></div>
+          <div class="bg-right"></div>
+          <div class="bg"></div>
+          <div class="bg-inner"></div>
         </div>
+        <div
+          *ngIf="form.get('initialBalance')?.touched && form.get('initialBalance')?.invalid"
+          class="alert alert-danger mt-2"
+        >
+          Montant initial invalide.
+        </div>
+      </div>
 
-        <!-- Overdraft -->
-        <div class="mb-3">
-          <label class="form-label">Découvert autorisé :</label>
+      <!-- Overdraft -->
+      <div class="control">
+        <div class="block-cube block-input">
           <input
             type="number"
             formControlName="overDraft"
-            class="form-control"
-            placeholder="Ex: 300"
+            placeholder="Découvert autorisé (Ex: 300)"
           />
-          <div
-            *ngIf="form.get('overDraft')?.touched && form.get('overDraft')?.invalid"
-            class="text-danger mt-1"
-          >
-            Montant de découvert invalide.
-          </div>
+          <div class="bg-top"></div>
+          <div class="bg-right"></div>
+          <div class="bg"></div>
+          <div class="bg-inner"></div>
         </div>
+        <div
+          *ngIf="form.get('overDraft')?.touched && form.get('overDraft')?.invalid"
+          class="alert alert-danger mt-2"
+        >
+          Montant de découvert invalide.
+        </div>
+      </div>
 
-        <!-- Buttons -->
-        <button
-          type="submit"
-          class="btn btn-primary"
-          [disabled]="form.invalid || isSubmitting"
-        >
-          {{ isSubmitting ? 'Création…' : 'Créer le compte' }}
-        </button>
-        <button
-          type="button"
-          class="btn btn-secondary ms-2"
-          (click)="form.reset()"
-        >
-          Annuler
-        </button>
-      </form>
-    </div>
+      <!-- Buttons -->
+      <div class="cyber-button-group">
+        <div class="block-cube block-cube-hover">
+          <button
+            type="submit"
+            class="btn"
+            [disabled]="form.invalid || isSubmitting"
+          >
+            <div class="text">{{ isSubmitting ? 'Création…' : 'Créer le compte' }}</div>
+          </button>
+          <div class="bg-top"></div>
+          <div class="bg-right"></div>
+          <div class="bg"></div>
+          <div class="bg-inner"></div>
+        </div>
+        
+        <div class="block-cube block-cube-hover">
+          <button
+            type="button"
+            class="btn cyber-btn-secondary"
+            (click)="form.reset()"
+          >
+            <div class="text">Annuler</div>
+          </button>
+          <div class="bg-top"></div>
+          <div class="bg-right"></div>
+          <div class="bg"></div>
+          <div class="bg-inner"></div>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

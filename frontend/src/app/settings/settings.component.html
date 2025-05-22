@@ -1,43 +1,112 @@
 <app-navbar></app-navbar>
-<div class="container">
-  <!-- Change Username Form -->
-  <div class="card col-md-6 offset-3 mt-4">
-    <div class="card-header">Change Username</div>
-    <div class="card-body">
-      <form [formGroup]="usernameForm" (ngSubmit)="changeUsername()">
-        <div class="mb-3">
-          <label class="form-label">New Username:</label>
-          <input type="text" class="form-control" formControlName="newUsername">
-          <span class="text-danger"
-                *ngIf="usernameForm.controls['newUsername'].touched && usernameForm.controls['newUsername'].invalid">
-            Username is required
-          </span>
-        </div>
-        <button class="btn btn-primary" [disabled]="!usernameForm.valid">Update Username</button>
-      </form>
-    </div>
-  </div>
 
-  <!-- Change Password Form -->
-  <div class="card col-md-6 offset-3 mt-4">
-    <div class="card-header">Change Password</div>
-    <div class="card-body">
-      <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
-        <div class="mb-3">
-          <label class="form-label">Old Password:</label>
-          <input type="password" class="form-control" formControlName="oldPassword">
+<div class="cyber-container">
+  <div class="cyber-forms-wrapper">
+    
+    <!-- Change Username Form -->
+    <div class="form">
+      <h1>Change Username</h1>
+      
+      <form [formGroup]="usernameForm" (ngSubmit)="changeUsername()">
+        <!-- Alert for form errors -->
+        <div *ngIf="usernameForm.controls['newUsername'].touched && usernameForm.controls['newUsername'].invalid" 
+             class="alert alert-danger">
+          Username is required
         </div>
-        <div class="mb-3">
-          <label class="form-label">New Password:</label>
-          <input type="password" class="form-control" formControlName="newPassword">
+
+        <!-- New Username Input -->
+        <div class="control">
+          <div class="block-cube block-input">
+            <input
+              type="text"
+              formControlName="newUsername"
+              placeholder="Enter new username..."
+            />
+            <div class="bg-top"></div>
+            <div class="bg-right"></div>
+            <div class="bg"></div>
+            <div class="bg-inner"></div>
+          </div>
         </div>
-        <span class="text-danger"
-              *ngIf="passwordForm.invalid && (passwordForm.controls['oldPassword'].touched || passwordForm.controls['newPassword'].touched)">
-          Both fields are required
-        </span>
-        <button class="btn btn-warning mt-2" [disabled]="!passwordForm.valid">Update Password</button>
+
+        <!-- Submit Button -->
+        <div class="cyber-button-group single-button">
+          <div class="block-cube block-cube-hover">
+            <button
+              type="submit"
+              class="btn"
+              [disabled]="!usernameForm.valid"
+            >
+              <div class="text">Update Username</div>
+            </button>
+            <div class="bg-top"></div>
+            <div class="bg-right"></div>
+            <div class="bg"></div>
+            <div class="bg-inner"></div>
+          </div>
+        </div>
       </form>
     </div>
+
+    <!-- Change Password Form -->
+    <div class="form">
+      <h1>Change Password</h1>
+      
+      <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+        <!-- Alert for form errors -->
+        <div *ngIf="passwordForm.invalid && (passwordForm.controls['oldPassword'].touched || passwordForm.controls['newPassword'].touched)" 
+             class="alert alert-danger">
+          Both fields are required
+        </div>
+
+        <!-- Old Password Input -->
+        <div class="control">
+          <div class="block-cube block-input">
+            <input
+              type="password"
+              formControlName="oldPassword"
+              placeholder="Enter old password..."
+            />
+            <div class="bg-top"></div>
+            <div class="bg-right"></div>
+            <div class="bg"></div>
+            <div class="bg-inner"></div>
+          </div>
+        </div>
+
+        <!-- New Password Input -->
+        <div class="control">
+          <div class="block-cube block-input">
+            <input
+              type="password"
+              formControlName="newPassword"
+              placeholder="Enter new password..."
+            />
+            <div class="bg-top"></div>
+            <div class="bg-right"></div>
+            <div class="bg"></div>
+            <div class="bg-inner"></div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="cyber-button-group single-button">
+          <div class="block-cube block-cube-hover">
+            <button
+              type="submit"
+              class="btn cyber-btn-warning"
+              [disabled]="!passwordForm.valid"
+            >
+              <div class="text">Update Password</div>
+            </button>
+            <div class="bg-top"></div>
+            <div class="bg-right"></div>
+            <div class="bg"></div>
+            <div class="bg-inner"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+    
   </div>
 </div>
-

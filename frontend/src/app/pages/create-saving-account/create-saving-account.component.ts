@@ -11,6 +11,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-create-saving-account',
   templateUrl: './create-saving-account.component.html',
+  styleUrls: ['./create-saving-account.component.css'],
 })
 export class CreateSavingAccountComponent implements OnInit {
   form: FormGroup;

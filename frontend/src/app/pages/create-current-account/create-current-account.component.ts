@@ -13,6 +13,7 @@ import { timer } from 'rxjs';
 @Component({
   selector: 'app-create-current-account',
   templateUrl: './create-current-account.component.html',
+  styleUrls: ['./create-current-account.component.css'],
 })
 export class CreateCurrentAccountComponent implements OnInit {
   form: FormGroup;

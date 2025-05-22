@@ -1,20 +1,19 @@
 <app-navbar></app-navbar>
 
-<!-- Toast container -->
+<!-- Toast container with cyberpunk styling -->
 <div aria-live="polite" aria-atomic="true" class="position-relative">
   <div class="toast-container position-fixed top-0 end-0 p-3">
     <div
       *ngIf="toastType"
-      class="toast show align-items-center text-white 
-             bg-{{ toastType === 'success' ? 'success' : 'danger' }} 
-             border-0"
+      class="cyber-toast show align-items-center text-white 
+             {{ toastType === 'success' ? 'toast-success' : 'toast-danger' }}"
       role="alert" aria-live="assertive" aria-atomic="true"
     >
       <div class="d-flex">
         <div class="toast-body">{{ toastMessage }}</div>
         <button
           type="button"
-          class="btn-close btn-close-white me-2 m-auto"
+          class="cyber-close-btn"
           (click)="toastType = null"
         ></button>
       </div>
@@ -22,70 +21,138 @@
   </div>
 </div>
 
-<!-- Main content -->
-<div class="container">
-  <div class="card col-md-6 offset-md-3 mt-4">
-    <div class="card-header">Créer un compte épargne</div>
-    <div class="card-body">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <!-- Typeahead -->
-        <div class="mb-3 position-relative">
-          <label class="form-label">Client :</label>
+<!-- Main content with cyberpunk theme -->
+<div class="cyber-container">
+  <div class="form">
+    <h1>Créer Compte Épargne</h1>
+    
+    <!-- Error Alert -->
+    <div *ngIf="form.get('selectedCustomerId')?.invalid && form.get('selectedCustomerId')?.touched"
+         class="alert alert-danger">
+      Sélectionnez un client pour continuer.
+    </div>
+    
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Customer Search with Typeahead -->
+      <div class="control">
+        <div class="block-cube block-input">
           <input
             type="text"
             formControlName="customerSearch"
-            class="form-control"
             placeholder="Tapez le nom du client..."
             autocomplete="off"
           />
-          <ul
-            *ngIf="customerOptions.length"
-            class="list-group position-absolute w-100 shadow"
-            style="z-index: 1000;"
-          >
-            <li
-              *ngFor="let c of customerOptions"
-              (click)="onSelectCustomer(c)"
-              class="list-group-item list-group-item-action"
-            >
-              {{ c.name }} ({{ c.email }})
-            </li>
-          </ul>
-          <input type="hidden" formControlName="selectedCustomerId" />
-          <div *ngIf="form.get('selectedCustomerId')?.invalid && form.get('selectedCustomerId')?.touched"
-               class="text-danger mt-1">
-            Sélectionnez un client.
+          <div class="bg-top">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg-right">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg">
+            <div class="bg-inner"></div>
           </div>
         </div>
+        
+        <!-- Typeahead dropdown -->
+        <div
+          *ngIf="customerOptions.length"
+          class="cyber-dropdown"
+        >
+          <div
+            *ngFor="let c of customerOptions"
+            (click)="onSelectCustomer(c)"
+            class="cyber-dropdown-item"
+          >
+            <span class="customer-name">{{ c.name }}</span>
+            <span class="customer-email">({{ c.email }})</span>
+          </div>
+        </div>
+        
+        <input type="hidden" formControlName="selectedCustomerId" />
+      </div>
 
-        <!-- Initial Balance -->
-        <div class="mb-3">
-          <label class="form-label">Solde initial :</label>
+      <!-- Initial Balance -->
+      <div class="control">
+        <div class="block-cube block-input">
           <input
             type="number"
             formControlName="initialBalance"
-            class="form-control"
-            placeholder="Ex: 1000"
+            placeholder="Solde initial (Ex: 1000)"
           />
+          <div class="bg-top">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg-right">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg">
+            <div class="bg-inner"></div>
+          </div>
         </div>
+      </div>
 
-        <!-- Interest Rate -->
-        <div class="mb-3">
-          <label class="form-label">Taux d’intérêt (%) :</label>
+      <!-- Interest Rate -->
+      <div class="control">
+        <div class="block-cube block-input">
           <input
             type="number"
             formControlName="interestRate"
-            class="form-control"
-            placeholder="Ex: 3.5"
+            placeholder="Taux d'intérêt % (Ex: 3.5)"
           />
+          <div class="bg-top">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg-right">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg">
+            <div class="bg-inner"></div>
+          </div>
         </div>
+      </div>
 
-        <!-- Buttons -->
-        <button type="submit" class="btn btn-primary" [disabled]="form.invalid || isSubmitting">
-          {{ isSubmitting ? 'Création...' : 'Créer le compte' }}
-        </button>
-        <button type="button" class="btn btn-secondary ms-2" (click)="form.reset()">Annuler</button>
-      </form>
-    </div>
+      <!-- Action Buttons -->
+      <div class="cyber-button-group">
+        <div class="block-cube block-cube-hover">
+          <button 
+            type="submit" 
+            class="btn cyber-btn-primary" 
+            [disabled]="form.invalid || isSubmitting"
+          >
+            <span class="text">
+              {{ isSubmitting ? 'Création...' : 'Créer le compte' }}
+            </span>
+          </button>
+          <div class="bg-top">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg-right">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg">
+            <div class="bg-inner"></div>
+          </div>
+        </div>
+        
+        <div class="block-cube block-cube-hover">
+          <button 
+            type="button" 
+            class="btn cyber-btn-secondary" 
+            (click)="form.reset()"
+          >
+            <span class="text">Annuler</span>
+          </button>
+          <div class="bg-top">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg-right">
+            <div class="bg-inner"></div>
+          </div>
+          <div class="bg">
+            <div class="bg-inner"></div>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
