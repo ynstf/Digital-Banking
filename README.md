@@ -2,336 +2,217 @@
 
 ## E-Banking Application Backend
 
-A robust Spring Boot application providing RESTful API services for a complete banking system with account management, customer management, and transaction processing capabilities.
+This repository contains the **Spring Boot Banking Management System** backend, featuring JWT-based authentication, RESTful APIs for managing customers, accounts, and operations, as well as Swagger/OpenAPI documentation.
 
-### Overview
+## Table of Contents
 
-This backend system powers a digital banking application with the following features:
+1. [Project Overview](#project-overview)
+2. [Technology Stack](#technology-stack)
+3. [Prerequisites](#prerequisites)
+4. [Installation](#installation)
+5. [Configuration](#configuration)
+6. [Running the Application](#running-the-application)
+7. [API Endpoints](#api-endpoints)
 
-- Customer management (create, update, delete, search)
-- Bank account management (current accounts and saving accounts)
-- Transaction operations (credit, debit, transfers)
-- Account history and operations tracking
-- JWT-based authentication and authorization
+   * Authentication
+   * Customers
+   * Accounts
+   * Operations
+   * Dashboard
+8. [Security](#security)
+9. [Swagger Documentation](#swagger-documentation)
+10. [Project Structure](#project-structure)
+11. [License](#license)
 
-### Tech Stack
+---
 
-- **Framework**: Spring Boot 3.4.5
-- **Java Version**: 21
-- **Database**: MySQL
-- **ORM**: Hibernate/JPA
-- **Security**: Spring Security with JWT
-- **API Documentation**: Swagger/OpenAPI
-- **Mapping**: MapStruct
-- **Build Tool**: Maven
+## Project Overview
 
-### Architecture
+The Banking Management Backend provides a robust API for managing bank customers, accounts (current and savings), and account operations (credit, debit, transfer). It includes analytics endpoints for dashboard insights and is secured with JWT-based authentication.
 
-The application follows a layered architecture:
+## Technology Stack
 
-- **Entities**: JPA entities representing the database model
-- **Repositories**: Data access layer using Spring Data JPA
-- **DTOs**: Data Transfer Objects for API exchanges
-- **Services**: Business logic implementation
-- **Controllers**: RESTful API endpoints
-- **Security**: Authentication and authorization configuration
+* **Language**: Java 17
+* **Framework**: Spring Boot 3
+* **Security**: Spring Security, JWT (HS512)
+* **Persistence**: Spring Data JPA, H2/MySQL
+* **Documentation**: springdoc-openapi 2.1.0 (Swagger UI)
+* **Build Tool**: Maven
 
-### Database Model
+## Prerequisites
 
-#### Key Entities
-- **Customer**: Stores customer information
-- **BankAccount**: Abstract base class for accounts
-  - **CurrentAccount**: Standard account with overdraft facility
-  - **SavingAccount**: Savings account with interest rate
-- **AccountOperation**: Records all transactions on accounts
+* JDK 17+
+* Maven 3.6+
+* (Optional) MySQL database
 
-### Getting Started
+## Installation
 
-#### Prerequisites
-- JDK 21
-- MySQL Database
-- Maven
+1. **Clone the repository**:
 
-#### Configuration
+   ```bash
+   git clone https://github.com/your-org/banking-backend.git
+   cd banking-backend
+   ```
+2. **Build the project**:
 
-Database connection settings in `application.properties`:
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/E-BANK?createDatabaseIfNotExist=true
-spring.datasource.username=root
-spring.datasource.password=
-```
-
-#### Running the Application
-
-1. Clone the repository
-2. Navigate to the project directory
-3. Build the project:
    ```bash
    mvn clean install
    ```
-4. Run the application:
-   ```bash
-   mvn spring-boot:run
-   ```
-   
-The application will start on port 8085 (configurable in application.properties).
 
-### Security
+## Configuration
 
-The application uses JWT token-based authentication with the following features:
+Update `src/main/resources/application.properties` with your database and JWT settings:
 
-- Token-based stateless authentication
-- Role-based access control (USER and ADMIN roles)
-- Method-level security with Spring Security annotations
-- CORS configuration for frontend integration
-
-Default users:
-- Username: `user1` / Password: `12345` (USER role)
-- Username: `admin` / Password: `12345` (USER and ADMIN roles)
-
-### API Endpoints
-
-#### Authentication
-- `POST /auth/login`: Authenticate and receive JWT token
-
-#### Customers
-- `GET /customers`: List all customers
-- `GET /customers/{id}`: Get customer by ID
-- `POST /customers`: Create new customer
-- `PUT /customers/{id}`: Update customer
-- `DELETE /customers/{id}`: Delete customer
-- `GET /customers/search`: Search customers by keyword
-- `GET /customers/{customerId}/accounts`: Get accounts for a customer
-
-#### Bank Accounts
-- `GET /accounts`: List all accounts
-- `GET /accounts/{accountId}`: Get account details
-- `GET /accounts/{accountId}/operations`: Get account operations
-- `GET /accounts/{accountId}/pageOperations`: Get paginated account operations
-- `POST /accounts/debit`: Perform debit operation
-- `POST /accounts/credit`: Perform credit operation
-- `POST /accounts/transfer`: Transfer between accounts
-
-### Test Data
-
-The application creates sample data at startup through the `CommandLineRunner` bean:
-- 3 sample customers
-- Current and Saving accounts for each customer
-- Sample transactions on each account
-
-### API Documentation
-
-API documentation is available via Swagger UI at:
-```
-http://localhost:8085/swagger-ui/index.html
+```properties
+spring.application.name=eBanking
+server.port=8080
+spring.datasource.url=jdbc:mysql://localhost:3306/E-BANK?createDatabaseIfNotExist=true
+spring.datasource.username=root
+spring.datasource.password=
+spring.jpa.hibernate.ddl-auto = create
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MariaDBDialect
+spring.jpa.show-sql=true
+security.jwt.expiration=1800
+security.jwt.secretKey = <9faa372517acd1389758d3750fc07acf00f542277f26feec1ce4593e93f64e338>
 ```
 
-### Configuration Options
-
-Key properties that can be configured in `application.properties`:
-- `server.port`: Application port (default: 8085)
-- `spring.jpa.hibernate.ddl-auto`: Database schema generation strategy
-- `spring.jpa.show-sql`: SQL query logging
-
-### Dependencies
-
-- Spring Boot Starter Data JPA
-- Spring Boot Starter Web
-- Spring Boot Starter Validation
-- Spring Boot Starter OAuth2 Resource Server
-- MySQL Connector
-- MapStruct
-- Lombok
-- SpringDoc OpenAPI (Swagger)
-- Bootstrap (for Thymeleaf templates)
-
-### Project Structure
-
-```
-backend/
-├── src/main/java/ma/banking/backend/
-│   ├── dtos/
-│   ├── entities/
-│   ├── enums/
-│   ├── exceptions/
-│   ├── mappers/
-│   ├── repositories/
-│   ├── security/
-│   ├── services/
-│   ├── web/
-│   └── Bknd2Application.java
-└── src/main/resources/
-    └── application.properties
-```
-
-### Key Features
-
-1. **Polymorphic Account Management**:
-   - Support for different account types with inheritance
-   - Type-specific operations and properties
-
-2. **Transaction Management**:
-   - Credit/debit operations with validation
-   - Fund transfers between accounts
-   - Insufficient balance protection
-
-3. **Customer Management**:
-   - Full CRUD operations
-   - Customer search functionality
-
-4. **Security**:
-   - JWT-based authentication 
-   - Role-based authorization
-   - Method-level security
-
-5. **DTO Pattern**:
-   - Clean separation between API and domain model
-   - MapStruct for efficient mapping
-
-
-
-## E-Banking Application Frontend
-
-### Overview
-
-This E-Banking application is a comprehensive web-based platform built with Angular that allows users to manage banking operations. The application provides a secure interface for customers and administrators to access account information, perform transactions, and manage customer data.
-
-### Features
-
-#### Authentication & Authorization
-- **User Authentication**: Secure login system with JWT token-based authentication
-- **Role-Based Access Control**: Different access levels for regular users and administrators
-- **Persistent Sessions**: Remembers user login sessions using local storage
-
-#### Account Management
-- **Account Search**: Look up accounts by ID
-- **Account Details**: View account balance and transaction history
-- **Pagination**: Navigate through transaction history pages
-
-#### Transaction Operations
-- **Debit Operations**: Withdraw funds from accounts
-- **Credit Operations**: Deposit funds into accounts
-- **Transfer Operations**: Move funds between accounts
-
-#### Customer Management
-- **Customer Listing**: View all customers with search functionality
-- **Customer Creation**: Add new customers to the system (admin only)
-- **Customer Details**: View customer information and associated accounts
-- **Customer Deletion**: Remove customers from the system (admin only)
-
-### Technical Stack
-
-- **Framework**: Angular 12+
-- **UI Components**: Bootstrap with Bootstrap Icons
-- **API Communication**: HttpClient with Interceptors
-- **Form Handling**: Reactive Forms
-- **Routing**: Angular Router with Guards for protected routes
-- **Authentication**: JWT Token-based auth with role-based access control
-
-### Project Structure
-
-```
-frontend/src/app/
-│
-├── accounts/                # Account management components
-├── admin-template/          # Admin dashboard layout
-├── customer-accounts/       # Customer accounts listing
-├── customers/               # Customer management components
-├── guards/                  # Authentication and authorization guards
-├── interceptors/            # HTTP interceptors for auth tokens
-├── login/                   # Authentication components
-├── model/                   # Data models and interfaces
-├── navbar/                  # Navigation component
-├── new-customer/            # Customer creation component
-├── not-authorized/          # Access denied component
-├── services/                # API services
-│   ├── accounts.service.ts  # Account operations service
-│   ├── auth.service.ts      # Authentication service
-│   └── customer.service.ts  # Customer operations service
-│
-├── app-routing.module.ts    # Application routes
-└── app.module.ts            # Main application module
-```
-
-### Setup Instructions
-
-#### Prerequisites
-- Node.js (v14+)
-- npm (v6+)
-- Angular CLI
-
-#### Installation
-
-1. Clone the repository
-   ```bash
-   git clone <repository-url>
-   cd <repository-directory>/frontend
-   ```
-
-2. Install dependencies
-   ```bash
-   npm install
-   ```
-
-3. Configure the environment
-   
-   Edit `src/environments/environment.ts` to set your backend API URL:
-   ```typescript
-   export const environment = {
-     production: false,
-     backendHost: "http://localhost:8085"  // Update with your backend URL
-   };
-   ```
-
-4. Run the development server
-   ```bash
-   ng serve
-   ```
-
-5. Navigate to `http://localhost:4200/` in your browser
-
-#### Building for Production
+## Running the Application
 
 ```bash
-ng build --configuration production
+mvn spring-boot:run
 ```
 
-The build artifacts will be stored in the `dist/` directory.
+The API will be accessible at `http://localhost:8080/`.
 
-### Authentication Flow
+## API Endpoints
 
-1. User enters credentials on the login page
-2. Upon successful authentication, a JWT token is stored in local storage
-3. The HTTP interceptor automatically attaches the token to all API requests
-4. Role-based guards protect routes based on user permissions
-5. Token expiration is handled by intercepting 401 responses
+### Authentication
 
-### User Roles
+![image](https://github.com/user-attachments/assets/ec641b16-180b-4eca-9a76-194508ea4bf3)
 
-- **User**: Can view accounts and perform basic operations
-- **Admin**: Can manage customers, create new accounts, and perform all operations
 
-### API Endpoints
+* **POST** `/auth/login`
+  **Request**: `{ "username": "admin", "password": "admin123" }`
+  **Response**: `{ "jwt": "<token>", "type": "Bearer", "username": "admin", "roles": ["ROLE_ADMIN"] }`
 
-The frontend communicates with the following API endpoints:
+* **GET** `/auth/profile` (Requires Bearer token)
+  *Returns* authenticated user details.
 
-- Authentication: `POST /auth/login`
-- Customers: 
-  - List: `GET /customers`
-  - Search: `GET /customers/search?keyword=`
-  - Create: `POST /customers`
-  - Delete: `DELETE /customers/{id}`
-- Accounts:
-  - Details: `GET /accounts/{id}/pageOperations`
-  - Debit: `POST /accounts/debit`
-  - Credit: `POST /accounts/credit`
-  - Transfer: `POST /accounts/transfer`
-  - Customer accounts: `GET /customers/{id}/accounts`
+### Customers
 
-### Contributing
+![image](https://github.com/user-attachments/assets/2cb846ed-6bce-405d-a0ac-7891dbc6fb68)
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+* **GET** `/customers` (ROLE\_USER)
+* **GET** `/customers/{id}` (ROLE\_USER)
+* **GET** `/customers/search?kw={keyword}` (ROLE\_USER)
+* **POST** `/customers` (ROLE\_ADMIN)
+
+  ```json
+  { "name": "Alice", "email": "alice@example.com" }
+  ```
+* **PUT** `/customers/{id}` (ROLE\_ADMIN)
+* **DELETE** `/customers/{id}` (ROLE\_ADMIN)
+
+### Accounts
+
+![image](https://github.com/user-attachments/assets/d0aabc06-9b23-4c2c-86df-ad3a7f4b7c06)
+
+
+
+* **GET** `/accounts` (ROLE\_USER)
+* **GET** `/accounts/{id}` (ROLE\_USER)
+* **POST** `/accounts/current` (ROLE\_ADMIN)
+
+  ```json
+  { "customerId": 1, "initialBalance": 5000, "overDraft": 1000 }
+  ```
+* **POST** `/accounts/saving` (ROLE\_ADMIN)
+
+  ```json
+  { "customerId": 1, "initialBalance": 3000, "interestRate": 3.5 }
+  ```
+
+### Operations
+
+![image](https://github.com/user-attachments/assets/d2349790-80eb-4526-8ba8-16a49bba7da8)
+
+* **POST** `/accounts/credit` (ROLE\_ADMIN)
+
+  ```json
+  { "accountId": "<uuid>", "amount": 200, "description": "Salary" }
+  ```
+* **POST** `/accounts/debit` (ROLE\_ADMIN)
+
+  ```json
+  { "accountId": "<uuid>", "amount": 50, "description": "Grocery" }
+  ```
+* **POST** `/accounts/transfer` (ROLE\_ADMIN)
+
+  ```json
+  { "sourceAccountId": "<uuid1>", "destAccountId": "<uuid2>", "amount": 100 }
+  ```
+* **GET** `/accounts/{id}/operations` (ROLE\_USER)
+* **GET** `/accounts/{id}/operations?page={p}&size={s}` (ROLE\_USER)
+
+### Dashboard
+
+![image](https://github.com/user-attachments/assets/ac9041a7-20d8-48cb-81d1-0766e561e745)
+
+
+* **GET** `/dashboard/summary` (ROLE\_ADMIN)
+  *Returns* counts, balances, trends, and top customers.
+
+## Security
+
+![image](https://github.com/user-attachments/assets/3d005f4a-a649-4a8c-aeeb-5e0c01dad58b)
+
+
+* **JWT Authentication**: Include `Authorization: Bearer <token>` in requests.
+
+* **Roles**:
+
+  * `ROLE_USER`: Read-only operations
+  * `ROLE_ADMIN`: Full access
+
+* **In-Memory Users** (for demo):
+
+  ```properties
+  user1 / password1 -> ROLE_USER
+  admin / admin123 -> ROLE_ADMIN
+  ```
+
+## Swagger Documentation
+
+Swagger UI is available at:
+
+```
+http://localhost:8080/swagger-ui.html
+```
+
+![image](https://github.com/user-attachments/assets/14e42d70-2a81-463d-a300-d7f365f26882)
+
+
+It includes security integration: click "Authorize" and paste your Bearer JWT.
+
+
+## Project Structure
+
+```
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com.example.bank
+│   │   │       ├── config      # Swagger & Security configuration
+│   │   │       ├── controllers # REST APIs
+│   │   │       ├── dtos        # Data Transfer Objects
+│   │   │       ├── entities    # JPA entities
+│   │   │       ├── exceptions  # Custom exceptions
+│   │   │       ├── repositories# Spring Data JPA repos
+│   │   │       ├── services    # Business logic
+│   │   │       └── utils       # Mappers & utilities
+│   └── resources
+│       └── application.yml
+└── pom.xml
+```
+
+
